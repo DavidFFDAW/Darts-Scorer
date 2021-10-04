@@ -1,20 +1,8 @@
 {
-  "name": "frontend",
+  "name": "front",
   "version": "0.1.0",
   "private": true,
-  "description": "Scorer for different games involving darts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DavidFFDAW/darts-scorer.git"
-  },
-  "author": "David Fernandez Flores",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DavidFFDAW/darts-scorer/issues"
-  },
-  "homepage": "https://github.com/DavidFFDAW/darts-scorer#readme",
   "dependencies": {
-    "@mui/material": "^5.0.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
