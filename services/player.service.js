@@ -5,10 +5,6 @@ class UserService {
         this.players = [];
     }
 
-    static setMaxPlayers(maxPlayers){
-        this.maxPlayers = maxPlayers;
-    }
-
     static getMaxPlayers(){
         return this.maxPlayers;
     }
@@ -19,6 +15,7 @@ class UserService {
 
     static setPlayers(players){
         this.players = players;
+        this.maxPlayers = this.players.length;
     }
 
 }

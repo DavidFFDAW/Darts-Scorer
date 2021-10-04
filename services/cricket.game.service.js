@@ -3,7 +3,7 @@ const UsersService = require('./player.service.js');
 class CricketGame {
     constructor(maxPlayers){
         this.round = 0;
-        this.maxRounds = 20 * maxPlayers;
+        this.maxRounds = 20 * 3 * maxPlayers; // rounds * shots * players
         this.isGameOver = false;
         this.maxPlayers = maxPlayers;
         this.scorer = [];
@@ -34,13 +34,9 @@ class CricketGame {
         // return this.scorer;
     }
 
-    _isNumberClosedForEveryone = (number) => {
-        return this.scorer.every(item => item.points[number] >= 3);
-    }
+    _isNumberClosedForEveryone = (number) => this.scorer.every(item => item.points[number] >= 3);
 
-    _isNumberClosedFor = (number, player) => {
-        return this.scorer.find(item => item.name === player).points[number] >= 3;
-    }
+    _isNumberClosedFor = (number, player) => this.scorer.find(item => item.name === player).points[number] >= 3;
 
     _addNewRound = _ => {
         if (this.round >= this.maxRounds) {
@@ -56,36 +52,54 @@ class CricketGame {
         if (!this._isNumberClosedForEveryone(point)) {
             const pointer = this.scorer.find(item => item.name === playerName);
             if (this._isNumberClosedFor(point,playerName)){
-                pointer.scorer += point;
+                pointer.score += point;
             }
-            pointer.points[point] + 1;
+            pointer.points[point] += 1;
             this._addNewRound();
         }
     }
 
-    getScorer = () => {
-        return this.scorer;
-    }
+    getScorer = () => this.scorer;    
+
+    getScoreByPlayerName = (player) => this.scorer.find(({ name }) => name === player).score;
 
     getRound = () => this.round;
-    
+    setRound = (round) => { this.round = round; }
 
     getMaxRounds = () => this.maxRounds;
 
 }
 
+// -------------------- TESTS ------------------------- //
+
 const players = ['Alvaro','Dani','Alexa','David'];
 
-UsersService.setMaxPlayers(4);
 UsersService.setPlayers(players);
 const cricket = new CricketGame(UsersService.getMaxPlayers());
 
 cricket.build(UsersService.getPlayers());
+
 cricket.addPointToScoreOf(20,'David');
 cricket.addPointToScoreOf(20,'David');
 cricket.addPointToScoreOf(20,'David');
 
-const scorer = cricket.getScorer();
+cricket.addPointToScoreOf(20,'Alexa');
+cricket.addPointToScoreOf(20,'Alexa');
+cricket.addPointToScoreOf(20,'Alexa');
+
+cricket.addPointToScoreOf(20,'Dani');
+cricket.addPointToScoreOf(20,'Dani');
+cricket.addPointToScoreOf(20,'Dani');
+
+cricket.addPointToScoreOf(20,'Alvaro');
+cricket.addPointToScoreOf(20,'Alvaro');
+cricket.addPointToScoreOf(20,'Alvaro');
+
+// David has 20 points
+cricket.addPointToScoreOf(20,'David');
+// David must remain with 20 points
+
+console.log('David Score: ',cricket.getScoreByPlayerName('David'));
 console.log(cricket.getRound());
 console.log(cricket.getMaxRounds());
 
