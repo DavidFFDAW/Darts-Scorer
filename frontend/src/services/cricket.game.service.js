@@ -7,7 +7,11 @@ export default class CricketGameService {
         this.maxPlayers = maxPlayers;
         this.scorer = [];
     }
-
+    /**
+     * Gets cricket points
+     * @method
+     * @returns {Object} Cricket points
+     */
     getInitialObject = () => {
         return {
             15: 0,
@@ -72,7 +76,7 @@ export default class CricketGameService {
 
 
 // -------------------- TESTS ------------------------- //
-
+/* 
 const players = ['Alvaro','Dani','Alexa','David'];
 
 UsersService.setPlayers(players);
@@ -105,4 +109,4 @@ console.log(cricket.getRound());
 console.log(cricket.getMaxRounds());
 
 
-
+ */
