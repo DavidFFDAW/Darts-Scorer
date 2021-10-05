@@ -1,4 +1,4 @@
-class UserService {
+export default class UserService {
     
     constructor(){
         this.maxPlayers = 0;
@@ -17,6 +17,4 @@ class UserService {
         this.players = players;
         this.maxPlayers = this.players.length;
     }
-
 }
-module.exports = UserService;

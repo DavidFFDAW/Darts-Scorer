@@ -1,6 +1,5 @@
-const UsersService = require('./player.service.js');
-
-class CricketGame {
+// const UsersService = require('./player.service.js');
+export default class CricketGameService {
     constructor(maxPlayers){
         this.round = 0;
         this.maxRounds = 20 * 3 * maxPlayers; // rounds * shots * players
@@ -69,6 +68,8 @@ class CricketGame {
     getMaxRounds = () => this.maxRounds;
 
 }
+
+
 
 // -------------------- TESTS ------------------------- //
 
