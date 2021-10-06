@@ -1,6 +1,8 @@
 import './App.css';
 import Redirector from './components/Redirector';
 import Options from './components/Options';
+import PlayerNames from './components/PlayerNames';
+import CricketPanel from 'components/CricketPanel';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
@@ -14,8 +16,10 @@ function App() {
           <Options/>
         </Route>
         <Route path='/darts/players/:players/game/:game' exact>
+          <PlayerNames/>
         </Route>
-        <Route path='/darts/cricket/game' exact>
+        <Route path='/darts/game/cricket/:players' exact>
+          <CricketPanel/>
         </Route>
       </Switch>
     </Router>

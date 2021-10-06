@@ -15,10 +15,14 @@
     justify-content: space-between;
     align-items: center;
 }
+.flex.between.wrap { flex-wrap: wrap; }
 .flex.center {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.flex.center.wrap{
+    flex-wrap: wrap;
 }
 .flex.center.vertical {
     flex-direction: column;
@@ -38,6 +42,7 @@
     min-height: 150px;
 }
 .btn {
+    cursor: pointer;
     width: 100%;
     outline: none;
     border: none;
