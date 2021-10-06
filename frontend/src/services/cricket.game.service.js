@@ -7,11 +7,6 @@ let isGameOver = false;
 let maxPlayers = 0;
 let scorer = [];
 
-/**
- * Gets cricket points
- * @method
- * @returns {Object} Cricket points object
- */
 const getInitialObject = () => {
       return {
             15: 0,
@@ -37,7 +32,7 @@ const build = (players) => {
       });
 
       scorer = objects;
-      // return this.scorer;
+      return scorer;
 }
 
 const _isNumberClosedForEveryone = (number) => scorer.every(item => item.points[number] >= 3);
@@ -60,12 +55,19 @@ const addPointToScoreOf = (point, playerName) => {
             if (_isNumberClosedFor(point,playerName)){
                   pointer.score += point;
             }
-            (point in pointer.points) ? pointer.points[point] += 1 : null;
+            if (pointer.points[point]){
+                  pointer.points[point] += 1;
+            }
             _addNewRound();
       }
 }
 
-const getScorer = () => scorer;    
+const getScorer = () => {
+      return scorer
+};    
+const setScorer = (passedScorer) => {
+      scorer = passedScorer
+};  
 
 const getScoreByPlayerName = (player) => scorer.find(({ name }) => name === player).score;
 
@@ -80,7 +82,7 @@ const getCurrentParsedRound = () => Math.floor(round / shots / maxPlayers);
 
 
 const CricketGameService = {
-      getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
+      getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, setScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
 }
 
 // --------------------- HOW IT WORKS --------------------- //
