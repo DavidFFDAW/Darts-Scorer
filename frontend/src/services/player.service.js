@@ -1,20 +1,19 @@
-export default class UserService {
-    
-    constructor(){
-        this.maxPlayers = 0;
-        this.players = [];
-    }
+let maxPlayers = 0;
+let players = [];
 
-    static getMaxPlayers(){
-        return this.maxPlayers;
-    }
+const getMaxPlayers = () => {
+    return maxPlayers;
+}
 
-    static getPlayers(){
-        return this.players;
-    }
+const getPlayers = () => {
+    return players;
+}
 
-    static setPlayers(players){
-        this.players = players;
-        this.maxPlayers = this.players.length;
-    }
+const setPlayers = (players) => {
+    players = players;
+    maxPlayers = players.length;
+}
+
+export default {
+    getMaxPlayers, setPlayers, getPlayers,
 }

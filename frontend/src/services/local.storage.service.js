@@ -1,17 +1,19 @@
-export default class LocalStorageService {
-    constructor(){
-        this.storage = window.localStorage;
-    }
+const storage = window.localStorage;
+    
+const store = (key, value) => {
+    storage.setItem(key, JSON.stringify(value));
+}
 
-    store = (key, value) => {
-        this.storage.setItem(key, JSON.stringify(value));
-    }
+const get = key => JSON.parse(storage.getItem(key));
 
-    get = key => JSON.parse(this.storage.getItem(key));
-
-    removeByKey = key => {
-        if (this.get(key)) {
-            this.storage.removeItem(key);
-        }
+const removeByKey = key => {
+    if (get(key)) {
+        storage.removeItem(key);
     }
 }
+
+const LocalStorageService = {
+    get, store, removeByKey
+}
+
+export default LocalStorageService;
