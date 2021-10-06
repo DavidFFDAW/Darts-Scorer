@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+:root {
+    --bg: #494949;
+    --boxes: #757575;
+    --green: #a4f08d;
+    --red: #e96767;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+    width: 90%;
+    margin: 0 auto;
+    min-height: auto;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.flex.between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.flex.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
+.flex.center.vertical {
+    flex-direction: column;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-bg {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+}
+.box {
+    margin-bottom: 60px;
+    box-sizing: border-box;
+    padding: 25px;
+    border: none;
+    border-radius: 25px;
+    background: var(--boxes);
+    width: 100%;
+    min-height: 150px;
+}
+.btn {
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 10px;
+    padding: 12px 25px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.btn.green{
+    background-color: #8baa82;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+.form label {
+    width: 100%;
+    margin: 20px 0 5px 0;
+    display: block;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+}
+.form input,
+.form textarea,
+.form select {
+    width: 100%;
+    margin: 5px 0 20px 0;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #eee;
 }
