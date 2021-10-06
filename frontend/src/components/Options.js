@@ -2,6 +2,7 @@ import './Options.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import storage from '../services/local.storage.service';
+import strgKeys from 'constants/storage.keys';
 import logo from '../darts-logo.svg';
 
 export default function Options() {
@@ -21,8 +22,8 @@ export default function Options() {
     }
 
     const storeConfigAndContinue = () => {
-        storage.store('gameType',gameType);
-        storage.store('numPlayers',numPlayers);
+        storage.store(strgKeys.gametype, gameType);
+        storage.store(strgKeys.playernumber, numPlayers);
         history.push(`/darts/players/${numPlayers}/game/${gameType}`);
     }
 

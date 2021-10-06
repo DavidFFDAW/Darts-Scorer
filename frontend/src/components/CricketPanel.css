@@ -1,0 +1,10 @@
+.scorer{
+    text-align: center;
+    margin: 20px auto;
+    width: 35%;
+    padding: 10px;
+    background-color: #6670a8;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+}
