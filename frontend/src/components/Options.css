@@ -1,0 +1,11 @@
+.options-logo{
+    width: 75px;
+}
+.options {
+    padding: 5px 0 50px 0;
+}
+.options h4 {
+    font-size: 25px;
+    color: #fff;
+    text-transform: uppercase;
+}
