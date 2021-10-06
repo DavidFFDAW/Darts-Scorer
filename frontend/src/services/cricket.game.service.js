@@ -1,19 +1,19 @@
-// const UsersService = require('./player.service.js');
-export default class CricketGameService {
-    constructor(maxPlayers){
-        this.round = 0;
-        this.maxRounds = 20 * 3 * maxPlayers; // rounds * shots * players
-        this.isGameOver = false;
-        this.maxPlayers = maxPlayers;
-        this.scorer = [];
-    }
-    /**
-     * Gets cricket points
-     * @method
-     * @returns {Object} Cricket points
-     */
-    getInitialObject = () => {
-        return {
+const cricketRounds = 20;
+const shots = 3;
+
+let round = 0;
+let maxRounds = 0;// rounds * shots * players
+let isGameOver = false;
+let maxPlayers = 0;
+let scorer = [];
+
+/**
+ * Gets cricket points
+ * @method
+ * @returns {Object} Cricket points object
+ */
+const getInitialObject = () => {
+      return {
             15: 0,
             16: 0,
             17: 0,
@@ -21,92 +21,95 @@ export default class CricketGameService {
             19: 0,
             20: 0,
             25: 0,
-        }
-    }
-
-    build = (players) => {
-        const objects = players.map(item => {
-            const obj = {
-                name: item,
-                points: this.getInitialObject(),
-                score: 0,
-            };
-            return obj;
-        });
-        this.scorer = objects;
-        // return this.scorer;
-    }
-
-    _isNumberClosedForEveryone = (number) => this.scorer.every(item => item.points[number] >= 3);
-
-    _isNumberClosedFor = (number, player) => this.scorer.find(item => item.name === player).points[number] >= 3;
-
-    _addNewRound = _ => {
-        if (this.round >= this.maxRounds) {
-            this.isGameOver = true;
-            return;
-        }
-        this.round++;        
-    }
-
-    addPointToScoreOf = (point, playerName) => {
-        if (this.isGameOver) throw new Error('The game is over');
-
-        if (!this._isNumberClosedForEveryone(point)) {
-            const pointer = this.scorer.find(item => item.name === playerName);
-            if (this._isNumberClosedFor(point,playerName)){
-                pointer.score += point;
-            }
-            pointer.points[point] += 1;
-            this._addNewRound();
-        }
-    }
-
-    getScorer = () => this.scorer;    
-
-    getScoreByPlayerName = (player) => this.scorer.find(({ name }) => name === player).score;
-
-    getRound = () => this.round;
-    setRound = (round) => { this.round = round; }
-
-    getMaxRounds = () => this.maxRounds;
-
+      }
 }
 
+const build = (players) => {
+      maxPlayers = players.length;
+      maxRounds = cricketRounds * shots * maxPlayers;
+
+      const objects = players.map(item => {
+            return {
+                  name: item,
+                  points: getInitialObject(),
+                  score: 0,
+            };
+      });
+
+      scorer = objects;
+      // return this.scorer;
+}
+
+const _isNumberClosedForEveryone = (number) => scorer.every(item => item.points[number] >= 3);
+
+const _isNumberClosedFor = (number, player) => scorer.find(item => item.name === player).points[number] >= 3;
+
+const _addNewRound = _ => {
+      if (round >= maxRounds) {
+            isGameOver = true;
+            return;
+      }
+      round++;        
+}
+
+const addPointToScoreOf = (point, playerName) => {
+      if (isGameOver) throw new Error('The game is over');
+
+      if (!_isNumberClosedForEveryone(point)) {
+            const pointer = scorer.find(item => item.name === playerName);
+            if (_isNumberClosedFor(point,playerName)){
+                  pointer.score += point;
+            }
+            (point in pointer.points) ? pointer.points[point] += 1 : null;
+            _addNewRound();
+      }
+}
+
+const getScorer = () => scorer;    
+
+const getScoreByPlayerName = (player) => scorer.find(({ name }) => name === player).score;
+
+const getRound = () => round;
+// const setRound = (round) => { round = round; }
+
+const getMaxRounds = () => maxRounds;
+const isOver = () => isGameOver;
+const getMaxPlayers = () => maxPlayers;
+
+const getCurrentParsedRound = () => Math.floor(round / shots / maxPlayers);
 
 
-// -------------------- TESTS ------------------------- //
-/* 
-const players = ['Alvaro','Dani','Alexa','David'];
+const CricketGameService = {
+      getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
+}
 
-UsersService.setPlayers(players);
-const cricket = new CricketGame(UsersService.getMaxPlayers());
+// --------------------- HOW IT WORKS --------------------- //
 
-cricket.build(UsersService.getPlayers());
+/*
+      cricket.build(['Davis', 'Alvaro']);
 
-cricket.addPointToScoreOf(20,'David');
-cricket.addPointToScoreOf(20,'David');
-cricket.addPointToScoreOf(20,'David');
+      cricket.addPointToScoreOf(18, 'Davis');
+      cricket.addPointToScoreOf(15, 'Davis');
+      cricket.addPointToScoreOf(20, 'Davis');
 
-cricket.addPointToScoreOf(20,'Alexa');
-cricket.addPointToScoreOf(20,'Alexa');
-cricket.addPointToScoreOf(20,'Alexa');
+      cricket.addPointToScoreOf(1, 'Alvaro');
+      cricket.addPointToScoreOf(16, 'Alvaro');
+      cricket.addPointToScoreOf(16, 'Alvaro');
 
-cricket.addPointToScoreOf(20,'Dani');
-cricket.addPointToScoreOf(20,'Dani');
-cricket.addPointToScoreOf(20,'Dani');
+      cricket.addPointToScoreOf(20, 'Davis');
+      cricket.addPointToScoreOf(20, 'Davis');
+      cricket.addPointToScoreOf(20, 'Davis');
 
-cricket.addPointToScoreOf(20,'Alvaro');
-cricket.addPointToScoreOf(20,'Alvaro');
-cricket.addPointToScoreOf(20,'Alvaro');
+      cricket.addPointToScoreOf(1, 'Alvaro');
+      cricket.addPointToScoreOf(7, 'Alvaro');
+      cricket.addPointToScoreOf(10, 'Alvaro');
 
-// David has 20 points
-cricket.addPointToScoreOf(20,'David');
-// David must remain with 20 points
+      console.log('Max players: ', cricket.getMaxPlayers());
+      console.log('Max rounds: ', cricket.getMaxRounds());
+      console.log('Current round: ', cricket.getRound());
+      console.log('Scorer: ', cricket.getScorer());
+      console.log('Current Round Parsed: ', cricket.getCurrentParsedRound());
 
-console.log('David Score: ',cricket.getScoreByPlayerName('David'));
-console.log(cricket.getRound());
-console.log(cricket.getMaxRounds());
+*/
 
-
- */
+export default CricketGameService;
