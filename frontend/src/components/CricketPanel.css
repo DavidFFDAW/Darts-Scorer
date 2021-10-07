@@ -1,10 +1,13 @@
 .scorer{
     text-align: center;
-    margin: 20px auto;
+    margin: 10px auto;
     width: 35%;
     padding: 10px;
-    background-color: #6670a8;
+    background-color: var(--blue);
     color: #fff;
     border: none;
     border-radius: 20px;
+}
+.dbug {
+    color: #fff;
 }
