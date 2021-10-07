@@ -55,8 +55,8 @@ const addPointToScoreOf = (point, playerName) => {
             if (_isNumberClosedFor(point,playerName)){
                   pointer.score += point;
             }
-            if (pointer.points[point]){
-                  pointer.points[point] += 1;
+            if (pointer.points.hasOwnProperty(`${point}`)) {
+                  pointer.points[`${point}`]++;
             }
             _addNewRound();
       }
