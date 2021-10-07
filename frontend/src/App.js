@@ -6,6 +6,7 @@ import CricketPanel from 'components/CricketPanel';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
+  
   return (
     <Router>
       <Switch>
