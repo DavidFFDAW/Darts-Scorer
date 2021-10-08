@@ -4,6 +4,7 @@ import Options from './components/Options';
 import PlayerNames from './components/PlayerNames';
 import CricketPanel from 'components/CricketPanel';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import Header from 'components/Header';
 
 function App() {
   
@@ -20,7 +21,10 @@ function App() {
           <PlayerNames/>
         </Route>
         <Route path='/darts/game/cricket/:players' exact>
-          <CricketPanel/>
+          <Header/>
+          <div style={{ marginTop: '60px' }}>
+            <CricketPanel/>
+          </div>
         </Route>
       </Switch>
     </Router>

@@ -1,3 +1,5 @@
+import LocalStorageService from "./local.storage.service";
+
 const cricketRounds = 20;
 const shots = 3;
 
@@ -47,19 +49,48 @@ const _addNewRound = _ => {
       round++;        
 }
 
-const addPointToScoreOf = (point, playerName) => {
-      if (isGameOver) throw new Error('The game is over');
+const addPointToScoreOf = (point, playerName, value, quantity = 1) => {
+      // if (isGameOver) throw new Error('The game is over');
 
       if (!_isNumberClosedForEveryone(point)) {
+            console.log(point);
+            console.log(playerName);
+            console.log(quantity);
             const pointer = scorer.find(item => item.name === playerName);
             if (_isNumberClosedFor(point,playerName)){
-                  pointer.score += point;
+                  pointer.score += +value;
             }
             if (pointer.points.hasOwnProperty(`${point}`)) {
-                  pointer.points[`${point}`]++;
+                  pointer.points[`${point}`] += +quantity;
             }
             _addNewRound();
       }
+      return getScorer();
+}
+
+const parser = {
+      0: ' ',
+      1: '/',
+      2: 'X',
+      3: '⦻'
+}
+
+const parseOutput = points => {
+      if (Array.isArray(points)) {
+            return points.map(point => point > 3 ? parser[3] : parser[point]);
+      }
+      return points > 3 ? parser[3] : parser[points];                  
+}
+
+const getPoints = scorer => scorer.map(i => i.points);
+
+const getScorePoints = scoreboard => {
+      const keys = Object.keys(getInitialObject());
+      const points = getPoints(scoreboard);
+
+      return keys.map(key => {
+            return [key, points.map(pt => parseOutput(pt[key])) ];
+      });
 }
 
 const getScorer = () => {
@@ -78,11 +109,14 @@ const getMaxRounds = () => maxRounds;
 const isOver = () => isGameOver;
 const getMaxPlayers = () => maxPlayers;
 
-const getCurrentParsedRound = () => Math.floor(round / shots / maxPlayers);
-
+const getCurrentParsedRound = (round) => {
+      const players = +LocalStorageService.get('numPlayers');
+      const shots = +LocalStorageService.get('maxShots');
+      return Math.floor(round / shots / players);
+}
 
 const CricketGameService = {
-      getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, setScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
+      getScorePoints, getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, setScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
 }
 
 // --------------------- HOW IT WORKS --------------------- //

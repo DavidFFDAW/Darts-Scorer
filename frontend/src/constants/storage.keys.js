@@ -3,6 +3,9 @@ const StorageKeys = {
     gametype: 'gameType',
     playernumber: 'numPlayers',
     scoreboard: 'scoreboard',
+    round: 'round',
+    shot: 'shot',
+    maxshots: 'maxShots'
 }
 
 export default StorageKeys;
