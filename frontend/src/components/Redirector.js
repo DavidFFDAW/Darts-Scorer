@@ -8,10 +8,10 @@ export default function Redirector() {
     const history = useHistory();
 
     useEffect(_ => {
-        if (storage.get('playerNames')) {
-            history.push('/darts/cricket/game');
+        if (storage.get('scoreboard')){
+            return history.push(`/darts/game/${ storage.get('gameType') }/${ storage.get('numPlayers') }`);
         }
-        history.push('/darts/options');
+        return history.push('/darts/options');
     },[ history ]);
 
     return (<React.Fragment/>);

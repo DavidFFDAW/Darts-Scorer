@@ -1,9 +1,8 @@
-let maxPlayers = 0;
 let players = [];
 let current = 0;
 
 const getMaxPlayers = () => {
-    return maxPlayers;
+    return players.length;
 }
 
 const getPlayers = () => {
@@ -12,7 +11,6 @@ const getPlayers = () => {
 
 const setPlayers = (passedPlayers) => {
     players = passedPlayers;
-    maxPlayers = players.length;
 }
 
 const next = () => {
@@ -25,8 +23,12 @@ const next = () => {
 
 const getCurrentPlayer = _ => players[current];
 
+const setPlayersCurrentCounter = val => {
+    current = val;
+}
+
 const PlayersService = {
-    getMaxPlayers, setPlayers, getPlayers, next, getCurrentPlayer
+    getMaxPlayers, setPlayers, getPlayers, next, getCurrentPlayer, setPlayersCurrentCounter
 }
 
 export default PlayersService;

@@ -10,8 +10,15 @@ const removeByKey = key => {
     storage.removeItem(key);    
 }
 
+const getScoreboardByGame = game => {
+    if (get('gameType') === game){
+        return get('scoreboard');
+    }
+    return false;
+}
+
 const LocalStorageService = {
-    get, store, removeByKey
+    get, store, removeByKey, getScoreboardByGame
 }
 
 export default LocalStorageService;

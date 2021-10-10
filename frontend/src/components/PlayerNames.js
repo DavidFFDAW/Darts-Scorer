@@ -7,6 +7,7 @@ import strgKeys from 'constants/storage.keys';
 import logo from '../darts-logo.svg';
 
 export default function PlayerNames() {
+    document.title = 'Choosing Names';
 
     const { game, players } = useParams();
     const [ playerNames, setPlayerNames ] = useState(Array.from({ length: players },_ => 0));

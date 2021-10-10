@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import PlayersService from 'services/player.service';
 
 export default function CricketPanel () {
+    document.title = 'Cricket Game';
 
     const history = useHistory();
     const maxShots = 3;
@@ -16,7 +17,7 @@ export default function CricketPanel () {
     if (!players) history.push('/');
 
     PlayersService.setPlayers(players);
-    const localScorer = storage.get(storageKeys.scoreboard)
+    const localScorer = storage.getScoreboardByGame('cricket');
     const scorer =  localScorer || cricket.build(players);
 
 
@@ -25,15 +26,6 @@ export default function CricketPanel () {
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
     const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
     const [ isPopUp, setPopUp ] = useState(false);
-
-
-    // useEffect( _ => {
-    //     const previousGame = storage.get(storageKeys.scoreboard);
-    //     if (previousGame) {
-    //         cricket.setScorer(previousGame);
-    //         setScoreboard(previousGame);
-    //     }
-    // }, []);
     
     useEffect(_ => {
         storage.store(storageKeys.round, round);
@@ -55,18 +47,20 @@ export default function CricketPanel () {
             setNextTurn();
             return;
         }        
-        setScoreboard(cricket.addPointToScoreOf(pt, currentUser, value, quantity));        
+        setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value, quantity));        
         storage.store(storageKeys.scoreboard, scoreboard);
         setShots(shots + 1);
         setRound(round + 1);
     }
 
-    /* const deleteGame = _ => {
-        Object.values(storageKeys).forEach(it => {
-            storage.removeByKey(it);
-        });
-        history.push('/');
-    } */
+    const resetGame = _ => {
+        setScoreboard(cricket.build(players));
+        setRound(0);
+        setShots(0);
+        PlayersService.setPlayersCurrentCounter(0);
+        setCurrentUser(PlayersService.getCurrentPlayer());
+        storage.removeByKey('scoreboard');
+    } 
 
     return (
         <div className="container">
@@ -77,7 +71,6 @@ export default function CricketPanel () {
                 <label className="dbug">Tiro: { shots }/3</label>
 
             </div>
-            {/* <button className="btn green" onClick={ _ => setNextTurn() }>Siguiente</button> */}
             { isPopUp && <div className="box popup flex center vertical form">
                 <h4>Turno de: { currentUser }</h4>
 
@@ -85,9 +78,10 @@ export default function CricketPanel () {
             </div> }
             <div className="flex between wrap">
                 { scoreboard.map((item, index) => {
-                    return (<div className="scorer form" key={ index }>
-                        <label>{ item.name }</label>
-                        <h4>{ item.score }</h4>
+                    return (<div className="scorer score" key={ index }>
+                        <label className="title">{ item.name }</label>
+                        <h4 className="point">{ item.score }</h4>
+                        <label>Pr: { item.average || '0' } %</label>
                     </div>
                     );
                 }) }
@@ -124,9 +118,10 @@ export default function CricketPanel () {
                     </tbody>
                 </table>
             </div>
-            {/* <div>
-                <button className="btn green" onClick={ deleteGame }>Borrar Partida</button>
-            </div> */}
+
+            <div className="down">
+                <button className="btn green" onClick={ resetGame }>Reiniciar Partida</button>
+            </div>
         </div>
     );
 }

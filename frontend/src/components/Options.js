@@ -6,6 +6,7 @@ import strgKeys from 'constants/storage.keys';
 import logo from '../darts-logo.svg';
 
 export default function Options() {
+    document.title = 'General Options';
 
     const [numPlayers, setNumPlayers] = useState('');
     const [gameType, setGameType] = useState('');

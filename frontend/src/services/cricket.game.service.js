@@ -1,151 +1,102 @@
-import LocalStorageService from "./local.storage.service";
-
-const cricketRounds = 20;
-const shots = 3;
-
-let round = 0;
-let maxRounds = 0;// rounds * shots * players
-let isGameOver = false;
-let maxPlayers = 0;
-let scorer = [];
-
-const getInitialObject = () => {
-      return {
-            15: 0,
-            16: 0,
-            17: 0,
-            18: 0,
-            19: 0,
-            20: 0,
-            25: 0,
-      }
-}
-
-const build = (players) => {
-      maxPlayers = players.length;
-      maxRounds = cricketRounds * shots * maxPlayers;
-
-      const objects = players.map(item => {
-            return {
-                  name: item,
-                  points: getInitialObject(),
-                  score: 0,
-            };
-      });
-
-      scorer = objects;
-      return scorer;
-}
-
-const _isNumberClosedForEveryone = (number) => scorer.every(item => item.points[number] >= 3);
-
-const _isNumberClosedFor = (number, player) => scorer.find(item => item.name === player).points[number] >= 3;
-
-const _addNewRound = _ => {
-      if (round >= maxRounds) {
-            isGameOver = true;
-            return;
-      }
-      round++;        
-}
-
-const addPointToScoreOf = (point, playerName, value, quantity = 1) => {
-      // if (isGameOver) throw new Error('The game is over');
-
-      if (!_isNumberClosedForEveryone(point)) {
-            console.log(point);
-            console.log(playerName);
-            console.log(quantity);
-            const pointer = scorer.find(item => item.name === playerName);
-            if (_isNumberClosedFor(point,playerName)){
-                  pointer.score += +value;
-            }
-            if (pointer.points.hasOwnProperty(`${point}`)) {
-                  pointer.points[`${point}`] += +quantity;
-            }
-            _addNewRound();
-      }
-      return getScorer();
-}
-
 const parser = {
       0: ' ',
       1: '/',
       2: 'X',
       3: '⦻'
-}
+  }
+  
+  const getInitialObject = () => {
+        return {
+              15: 0,
+              16: 0,
+              17: 0,
+              18: 0,
+              19: 0,
+              20: 0,
+              25: 0,
+        }
+  }
+  
+  const build = (players) => {
+        return players.map(item => {
+            return {
+                  name: item,
+                  points: getInitialObject(),
+                  score: 0,
+                  out: 0,
+                  valid: 0,
+            };
+        });
+  }
 
-const parseOutput = points => {
-      if (Array.isArray(points)) {
-            return points.map(point => point > 3 ? parser[3] : parser[point]);
+  const calculateAverage = scoreboard => {
+        return scoreboard.map( it => {
+              const total = +it.valid + +it.out;
+              const average = Math.floor(( it.valid / total ) * 100);
+
+              return {
+                    ...it,
+                    average,
+              }
+        });
+  }
+  
+  const _isNumberClosedForEveryone = (scorer, number) => scorer.every(item => item.points[number] >= 3);
+  
+  const _isNumberClosedFor = (scorer, number, player) => scorer.find(item => item.name === player).points[number] >= 3;
+  
+  const addPointToScoreOf = (scorer, point, playerName, value, quantity = 1) => {
+      const pointer = scorer.find(item => item.name === playerName);
+
+      if (_isNumberClosedForEveryone(scorer, point)) return scorer;
+
+      if (_isNumberClosedFor(scorer, point, playerName)){
+            pointer.score += +value;
       }
-      return points > 3 ? parser[3] : parser[points];                  
-}
 
-const getPoints = scorer => scorer.map(i => i.points);
+      if (pointer.points.hasOwnProperty(`${point}`)) {
+            pointer.points[`${point}`] += +quantity;
+      }       
 
-const getScorePoints = scoreboard => {
-      const keys = Object.keys(getInitialObject());
-      const points = getPoints(scoreboard);
+      if (Object.keys(getInitialObject()).includes(point)) {
+            pointer.valid++;
+      } else {
+            pointer.out++;
+      }
 
-      return keys.map(key => {
-            return [key, points.map(pt => parseOutput(pt[key])) ];
-      });
-}
+      // console.log(calculateAverage(scorer))
 
-const getScorer = () => {
-      return scorer
-};    
-const setScorer = (passedScorer) => {
-      scorer = passedScorer
-};  
-
-const getScoreByPlayerName = (player) => scorer.find(({ name }) => name === player).score;
-
-const getRound = () => round;
-// const setRound = (round) => { round = round; }
-
-const getMaxRounds = () => maxRounds;
-const isOver = () => isGameOver;
-const getMaxPlayers = () => maxPlayers;
-
-const getCurrentParsedRound = (round) => {
-      const players = +LocalStorageService.get('numPlayers');
-      const shots = +LocalStorageService.get('maxShots');
-      return Math.floor(round / shots / players);
-}
-
-const CricketGameService = {
-      getScorePoints, getRound, getMaxRounds, isOver, getMaxPlayers, build, getScorer, setScorer, addPointToScoreOf, getScoreByPlayerName, getCurrentParsedRound
-}
-
-// --------------------- HOW IT WORKS --------------------- //
-
-/*
-      cricket.build(['Davis', 'Alvaro']);
-
-      cricket.addPointToScoreOf(18, 'Davis');
-      cricket.addPointToScoreOf(15, 'Davis');
-      cricket.addPointToScoreOf(20, 'Davis');
-
-      cricket.addPointToScoreOf(1, 'Alvaro');
-      cricket.addPointToScoreOf(16, 'Alvaro');
-      cricket.addPointToScoreOf(16, 'Alvaro');
-
-      cricket.addPointToScoreOf(20, 'Davis');
-      cricket.addPointToScoreOf(20, 'Davis');
-      cricket.addPointToScoreOf(20, 'Davis');
-
-      cricket.addPointToScoreOf(1, 'Alvaro');
-      cricket.addPointToScoreOf(7, 'Alvaro');
-      cricket.addPointToScoreOf(10, 'Alvaro');
-
-      console.log('Max players: ', cricket.getMaxPlayers());
-      console.log('Max rounds: ', cricket.getMaxRounds());
-      console.log('Current round: ', cricket.getRound());
-      console.log('Scorer: ', cricket.getScorer());
-      console.log('Current Round Parsed: ', cricket.getCurrentParsedRound());
-
-*/
-
-export default CricketGameService;
+      return calculateAverage(scorer);
+  }
+  
+  
+  const parseOutput = points => {
+        if (Array.isArray(points)) {
+              return points.map(point => point > 3 ? parser[3] : parser[point]);
+        }
+        return points > 3 ? parser[3] : parser[points];                  
+  }
+  
+  
+  const getPoints = scorer => scorer.map(i => i.points);
+  
+  
+  const getScorePoints = scoreboard => {
+        const keys = Object.keys(getInitialObject());
+        const points = getPoints(scoreboard);
+  
+        return keys.map(key => {
+              return [key, points.map(pt => parseOutput(pt[key])) ];
+        });
+  }
+  
+  
+  const getScoreByPlayerName = (scorer, player) => scorer.find(({ name }) => name === player).score;
+  
+  
+  const CricketGameService = {
+        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName
+  }
+  
+  export default CricketGameService;
+  

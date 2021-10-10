@@ -12,6 +12,12 @@
     min-height: auto;
 }
 .down { margin-top: 50px; }
+.grid.points{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 10px;
+    margin: 0 auto;
+}
 .flex.between {
     display: flex;
     justify-content: space-between;
@@ -151,6 +157,19 @@
     background: #999999;
     padding: 10px 10px;
     width: 100%;
+}
+.score label.title {
+    display: block;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.score .point {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    padding: 15px 0;
 }
 table { width: 100%; color: #fff; text-align: center; font-size: 20px; }
 table th { font-size: 20px; background: #808080; }
