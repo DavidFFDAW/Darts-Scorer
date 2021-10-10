@@ -51,7 +51,7 @@ export default function Options() {
                         <label>Tipo de juego:</label>
                         <select defaultValue="--" onChange={ ev => changeGameType(ev) }>
                             <option disabled>--</option>
-                            <option value="301">301 (Dev)</option>
+                            <option value="301">301</option>
                             <option value="501">501 (Dev)</option>
                             <option value="701">701 (Dev)</option>
                             <option value="cricket">Cricket</option>
