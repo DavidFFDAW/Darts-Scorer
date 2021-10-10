@@ -1,10 +1,16 @@
 import sk from 'constants/storage.keys';
 import { useHistory } from 'react-router';
 import ls from 'services/local.storage.service';
+import { Divide as Hamburger } from 'hamburger-react'
+import { useState } from 'react';
+import { FaHome, FaTrashAlt } from 'react-icons/fa';
+import { GiDart } from 'react-icons/gi';
 
 export default function Header() {
 
     const history = useHistory();
+
+    const [ isOpen, setOpen ] = useState(false);
     
     const deleteCache = _ => {
         Object.values(sk).forEach(key => {
@@ -19,13 +25,38 @@ export default function Header() {
         ls.removeByKey('shot');
     }
 
+    const goToMenu = _ => {
+        deleteJustNeeded()
+        history.push('/');
+    }
+
     return (
         <div className="header">
             <div className="flex between">
                 <div></div>
-                <button className="" onClick={deleteCache}>Borrar Storage</button>
-                <button className="" onClick={deleteJustNeeded}>Borrar Scores</button>
+                <Hamburger toggled={ isOpen } color={'#fff'} toggle={ setOpen } size={20} label="Show Menu" hideOutline={true} rounded />
             </div>
+
+            { isOpen && <div className="head-menu">
+                <div className="down flex center vertical">
+                    <button onClick={ goToMenu } className="link flex between">
+                            <FaHome size={40}/>
+                            <span>Home</span>
+                    </button>
+                    <button className="link flex between">
+                            <GiDart size={40}/>
+                            <span>Cricket</span>
+                    </button>
+                    <button className="link flex between">
+                            <FaTrashAlt size={40}/>
+                            <span>Storage</span>
+                    </button>
+                    <button className="link flex between">
+                            <FaTrashAlt size={40}/>
+                            <span>Scores</span>
+                    </button>
+                </div>
+            </div> }
 
         </div>
     )
