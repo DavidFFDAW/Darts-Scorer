@@ -46,7 +46,12 @@ export default function CricketPanel () {
             setShots(0);
             setNextTurn();
             return;
-        }        
+        }
+        if (quantity > 1) {
+            [...Array(quantity).keys()].forEach(it => {
+                setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value)); 
+            });
+        }
         setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value, quantity));        
         storage.store(storageKeys.scoreboard, scoreboard);
         setShots(shots + 1);
