@@ -5,6 +5,9 @@ import cricket from "services/cricket.game.service";
 import storage from "services/local.storage.service";
 import { useHistory } from 'react-router';
 import PlayersService from 'services/player.service';
+import PopUp from './PopUp/PopUp';
+import Scorer from './Scorer/Scorer';
+import GameInfo from './GameInfo/GameInfo';
 
 export default function CricketPanel () {
     document.title = 'Cricket Game';
@@ -25,7 +28,7 @@ export default function CricketPanel () {
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
     const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
-    const [ isPopUp, setPopUp ] = useState(false);
+    const [ isPopUp, setPopUp ] = useState({stat: false});
     
     useEffect(_ => {
         storage.store(storageKeys.round, round);
@@ -35,18 +38,18 @@ export default function CricketPanel () {
         storage.store(storageKeys.shot, shots);
     }, [ shots ]);
 
+    const showPopUpMessage = msg => {
+        setPopUp({ stat: true, content: msg });
+    }
+
     const setNextTurn = _ => {
+        setShots(0);
         const newTurn = PlayersService.next();
         setCurrentUser(newTurn);
-        setPopUp(true);
+        showPopUpMessage(`Turno de ${ currentUser }`);
     }
 
     const addPoints = (pt, value = pt, quantity = 1) => {
-        if (shots >= maxShots) {
-            setShots(0);
-            setNextTurn();
-            return;
-        }
         if (quantity > 1) {
             [...Array(quantity).keys()].forEach(it => {
                 setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value)); 
@@ -57,6 +60,7 @@ export default function CricketPanel () {
         storage.store(storageKeys.scoreboard, scoreboard);
         setShots(shots + 1);
         setRound(round + 1);
+        return shots >= (maxShots - 1) ? setNextTurn() : null;
     }
 
     const resetGame = _ => {
@@ -69,30 +73,11 @@ export default function CricketPanel () {
     } 
 
     return (
-        <div className="container">
-            { isPopUp && <div className="absolute action-block"></div> }
-            <div className="flex between">
-                <label className="dbug">Turno: { currentUser }</label><br/>
-                <label className="dbug">Ronda: { Math.floor(+round / +maxShots / +players.length) }/20</label>
-                <label className="dbug">Tiro: { shots }/3</label>
-
-            </div>
-            { isPopUp && <div className="box popup flex center vertical form">
-                <h4>Turno de: { currentUser }</h4>
-
-               <button className="btn btn-close red" onClick={ _ => setPopUp(false) }>&times;</button>
-            </div> }
-            <div className="flex between wrap">
-                { scoreboard.map((item, index) => {
-                    return (<div className="scorer score" key={ index }>
-                        <label className="title">{ item.name }</label>
-                        <h4 className="point">{ item.score }</h4>
-                        <label>Pr: { item.average || '0' } %</label>
-                    </div>
-                    );
-                }) }
-            </div>
-
+        <div className="container">            
+            <PopUp toggled={ isPopUp.stat } toggler={ setPopUp } content={ isPopUp.content } stat={ true } />
+            <GameInfo user={ currentUser } round={ round } shots={ shots } players={ players } maxShots={ maxShots } maxRounds={ 20 } />
+            <Scorer scoreboard={ scoreboard } average={ true } />
+            
             <div className="down">
                 <table>
                     <thead>

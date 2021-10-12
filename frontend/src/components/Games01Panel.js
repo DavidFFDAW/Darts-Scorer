@@ -1,13 +1,16 @@
 import './CricketPanel.css';
 import storageKeys from "constants/storage.keys";
 import { useState, useEffect } from "react";
-import game301 from 'services/301.game.service';
+import game301 from 'services/games.01.service';
 import storage from "services/local.storage.service";
 import { useHistory } from 'react-router';
 import PlayersService from 'services/player.service';
+import PopUp from './PopUp/PopUp';
+import Scorer from './Scorer/Scorer';
+import GameInfo from './GameInfo/GameInfo';
 
-export default function Game301Panel () {
-    document.title = '301 Game';
+export default function Game01Panel ({ game, maxPoints, maxShots = 3 }) {
+    document.title = `${game} Game`;
     
     const players = storage.get(storageKeys.playernames);
 
@@ -15,20 +18,17 @@ export default function Game301Panel () {
     if (!players) history.push('/');
     
     const pointboard = [...Array(21).keys()];
-    
-    const maxShots = 3;
     storage.store(storageKeys.maxshots,maxShots);
     
 
     PlayersService.setPlayers(players);    
-    const localScorer = storage.getScoreboardByGame('301');
-    const scorer =  localScorer || game301.buildGame(players);
+    const localScorer = storage.getScoreboardByGame(game);
+    const scorer =  localScorer || game301.buildGame(players,maxPoints);
 
     const [ scoreboard, setScoreboard ] = useState(scorer);
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
     const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
-    const [ isPopUp, setPopUp ] = useState(false);
     const [ customPopUp, setCustomPopUp ] = useState({ stat: false, content: '' });
 
     useEffect(_ => {
@@ -39,11 +39,15 @@ export default function Game301Panel () {
         storage.store(storageKeys.shot, shots);
     }, [ shots ]);
 
+    const showPopUpWithMessage = message => {
+        setCustomPopUp({ stat: true, content: message });
+    }
+
     const setNextTurn = _ => {
         setShots(0);
         const newTurn = PlayersService.next();
         setCurrentUser(newTurn);
-        setPopUp(true);
+        showPopUpWithMessage(`Turno de ${currentUser}`);
     }
 
     const checkWinner = _ => {
@@ -82,34 +86,9 @@ export default function Game301Panel () {
 
     return (
         <div className="container">
-            { isPopUp && <div className="absolute action-block"></div> }
-            { customPopUp.stat && <div className="absolute action-block"></div> }
-            <div className="flex between">
-                <label className="dbug">Turno: { currentUser }</label><br/>
-                <label className="dbug">Ronda: { Math.floor(+round / +maxShots / +players.length) }/15</label>
-                <label className="dbug">Tiro: { shots }/3</label>
-
-            </div>
-            { customPopUp.stat && <div className="box popup flex center vertical form">
-                <h4>{ customPopUp.content || '' }</h4>
-
-               <button className="btn btn-close red" onClick={ _ => setCustomPopUp({ stat: false }) }>&times;</button>
-            </div> }
-            { isPopUp && <div className="box popup flex center vertical form">
-                <h4>Turno de: { currentUser }</h4>
-
-               <button className="btn btn-close red" onClick={ _ => setPopUp(false) }>&times;</button>
-            </div> }
-            <div className="flex between wrap">
-                { scoreboard.map((item, index) => {
-                    return (<div className="scorer score" key={ index }>
-                        <label className="title">{ item.name }</label>
-                        <h4 className="point">{ item.score }</h4>
-                        <label>Last: { item.last || 'None' }</label>
-                    </div>
-                    );
-                }) }
-            </div>
+            <PopUp toggled={ customPopUp.stat } toggler={ setCustomPopUp } content={ customPopUp.content } stat={ true } />
+            <GameInfo user={ currentUser } round={ round } shots={ shots } players={ players } maxShots={ maxShots } maxRounds={ 15 } />
+            <Scorer scoreboard={ scoreboard } lastShot={ true } />
 
             <div className="down">
                 <div className="flex between wrap">

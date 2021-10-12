@@ -1,6 +1,7 @@
 import sk from 'constants/storage.keys';
 import { useHistory } from 'react-router';
 import ls from 'services/local.storage.service';
+import pl from 'services/player.service';
 import { Divide as Hamburger } from 'hamburger-react'
 import { useState } from 'react';
 import { FaHome, FaTrashAlt } from 'react-icons/fa';
@@ -26,7 +27,8 @@ export default function Header() {
     }
 
     const goToMenu = _ => {
-        deleteJustNeeded()
+        pl.setPlayersCurrentCounter(0);
+        deleteCache();
         history.push('/');
     }
 
