@@ -1,5 +1,5 @@
-const buildGame = (players) => {
-    return players.map(name => ({ name: name, score: 301, last: '' }));
+const buildGame = (players, maxPoints) => {
+    return players.map(name => ({ name: name, score: maxPoints, last: '' }));
 }
 
 const isThereWinner = scoreboard => scoreboard.some( item => item.score === 0);

@@ -32,8 +32,7 @@ const parser = {
   const calculateAverage = scoreboard => {
         return scoreboard.map( it => {
               const total = +it.valid + +it.out;
-              const average = Math.floor(( it.valid / total ) * 100);
-
+              const average = total === 0 ? 1 : (( it.valid / total ) * 3).toFixed(2);
               return {
                     ...it,
                     average,
