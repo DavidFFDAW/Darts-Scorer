@@ -23,9 +23,9 @@ export default function Options() {
     }
 
     const storeConfigAndContinue = () => {
-        storage.store(strgKeys.gametype, gameType);
-        storage.store(strgKeys.playernumber, numPlayers);
-        history.push(`/darts/players/${numPlayers}/game/${gameType}`);
+        storage.store(strgKeys.gametype, gameType || '301');
+        storage.store(strgKeys.playernumber, numPlayers || 2);
+        history.push(`/darts/players/${numPlayers || 2}/game/${gameType || '301'}`);
     }
 
     return (

@@ -22,12 +22,14 @@ export default function PlayerNames() {
 
     const storeNameInArray = (ev, index) => {
         const newArray = playerNames;
-        newArray[index] = ev.target.value;
+        newArray[index] = ev.target.value || `Jugador ${ index+1 }`;
         setPlayerNames(newArray);
     }
 
     const storeConfigAndContinue = () => {
-        storage.store(strgKeys.playernames,playerNames);
+        const parsedNames = playerNames.map( (it,ix) => it === 0 ? `Jugador ${ ix+1 }` : it);
+        setPlayerNames(parsedNames);
+        storage.store(strgKeys.playernames, parsedNames);
         history.push(`/darts/game/${game}/${players}`);
     }
 

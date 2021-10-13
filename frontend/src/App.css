@@ -167,19 +167,20 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    top: 45px;
+    top: 50px;
     width: 100%;
     background: #eee;
     animation: menu 1s ease forwards;
+}
+.head-link:active {
+    text-align: center;
+    background-color: #c2c2c2;
 }
 .head-menu button.link {
     padding: 15px;
     border: none;
     background: transparent;
     font-size: 30px;    
-}
-.head-menu button.link:active {
-    background: #e2e2e2;    
 }
 .head-menu button.link span {
     margin-left: 50px;

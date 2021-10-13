@@ -8,6 +8,7 @@ import PlayersService from 'services/player.service';
 import PopUp from './PopUp/PopUp';
 import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
+import CricketBoard from './Boards/CricketBoard';
 
 export default function CricketPanel () {
     document.title = 'Cricket Game';
@@ -46,16 +47,16 @@ export default function CricketPanel () {
         setShots(0);
         const newTurn = PlayersService.next();
         setCurrentUser(newTurn);
-        showPopUpMessage(`Turno de ${ currentUser }`);
+        showPopUpMessage(`Turno de ${ newTurn }`);
     }
 
-    const addPoints = (pt, value = pt, quantity = 1) => {
+    const addPoints = (pt, quantity = 1) => {
         if (quantity > 1) {
-            [...Array(quantity).keys()].forEach(it => {
-                setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value)); 
+            [...Array(quantity).keys()].forEach(_ => {
+                setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser)); 
             });
         } else {
-            setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser, value, quantity));        
+            setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser));        
         }
         storage.store(storageKeys.scoreboard, scoreboard);
         setShots(shots + 1);
@@ -74,41 +75,25 @@ export default function CricketPanel () {
 
     return (
         <div className="container">            
-            <PopUp toggled={ isPopUp.stat } toggler={ setPopUp } content={ isPopUp.content } stat={ true } />
-            <GameInfo user={ currentUser } round={ round } shots={ shots } players={ players } maxShots={ maxShots } maxRounds={ 20 } />
-            <Scorer scoreboard={ scoreboard } average={ true } />
+            <PopUp 
+                toggled={ isPopUp.stat } toggler={ setPopUp } 
+                content={ isPopUp.content } stat={ true } 
+            />
             
-            <div className="down">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            { players.map((it,index) => <th key={ index }>{ it }</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        cricket.getScorePoints(scoreboard).map(([key,value],ind) => {
-                            return (
-                                <tr key={ind}>
-                                    <td>
-                                        <button onClick={ _ => addPoints(key) } className="pt-btn">{ key }</button>
-                                        <button onClick={ _ => addPoints(key, key*2, 2) } className="pt-btn double">D{ key }</button>
-                                        { key !== '25' && <button onClick={ _ => addPoints(key, key*3, 3) } className="pt-btn triple">T{ key }</button> }
-                                    </td>
-                                    { value.map((pt,ix) => <td key={ ix }>{ pt }</td>) }
-                                </tr>
-                            );
-                        })
-                    }
-                    <tr>
-                        <td colSpan={ players.length + 1 }>
-                            <button onClick={ _ => addPoints(0) } className="pt-btn">0</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <GameInfo 
+                user={ currentUser } round={ round } 
+                shots={ shots } players={ players } 
+                maxShots={ maxShots } maxRounds={ 20 } 
+            />
+            
+            <Scorer scoreboard={ scoreboard } average={ true } />
+
+            <CricketBoard 
+                players={ players } 
+                scoreboard={ scoreboard } 
+                cricketService={ cricket } 
+                addPoints={ addPoints }
+            />
 
             <div className="down">
                 <button className="btn green" onClick={ resetGame }>Reiniciar Partida</button>

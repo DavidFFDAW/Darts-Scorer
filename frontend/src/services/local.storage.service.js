@@ -1,6 +1,9 @@
 const storage = window.localStorage;
     
 const store = (key, value) => {
+    if (get(key)) {
+        removeByKey(key);
+    }
     storage.setItem(key, JSON.stringify(value));
 }
 

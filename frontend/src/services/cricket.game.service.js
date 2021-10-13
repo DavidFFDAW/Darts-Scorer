@@ -44,17 +44,17 @@ const parser = {
   
   const _isNumberClosedFor = (scorer, number, player) => scorer.find(item => item.name === player).points[number] >= 3;
   
-  const addPointToScoreOf = (scorer, point, playerName, value, quantity = 1) => {
+  const addPointToScoreOf = (scorer, point, playerName) => {
       const pointer = scorer.find(item => item.name === playerName);
 
       if (_isNumberClosedForEveryone(scorer, point)) return scorer;
 
       if (_isNumberClosedFor(scorer, point, playerName)){
-            pointer.score += +value;
+            pointer.score += +point;
       }
 
       if (pointer.points.hasOwnProperty(`${point}`)) {
-            pointer.points[`${point}`] += +quantity;
+            pointer.points[`${point}`] += 1;
       }       
 
       if (Object.keys(getInitialObject()).includes(point)) {

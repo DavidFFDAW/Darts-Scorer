@@ -4,13 +4,14 @@ import ls from 'services/local.storage.service';
 import pl from 'services/player.service';
 import { Divide as Hamburger } from 'hamburger-react'
 import { useState } from 'react';
-import { FaHome, FaTrashAlt } from 'react-icons/fa';
-import { GiDart } from 'react-icons/gi';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
+import HeadMenu from './HeadMenu';
 
 export default function Header() {
 
     const history = useHistory();
 
+    const arrowStyle = { paddingLeft: '10px' };
     const [ isOpen, setOpen ] = useState(false);
     
     const deleteCache = _ => {
@@ -20,11 +21,11 @@ export default function Header() {
         history.push('/darts/options');
     }
     
-    const deleteJustNeeded = _ => {
-        ls.removeByKey(sk.scoreboard);
-        ls.removeByKey('round');
-        ls.removeByKey('shot');
-    }
+    // const deleteJustNeeded = _ => {
+    //     ls.removeByKey(sk.scoreboard);
+    //     ls.removeByKey('round');
+    //     ls.removeByKey('shot');
+    // }
 
     const goToMenu = _ => {
         pl.setPlayersCurrentCounter(0);
@@ -35,30 +36,11 @@ export default function Header() {
     return (
         <div className="header">
             <div className="flex between">
-                <div></div>
+                <FaLongArrowAltLeft style={ arrowStyle } color={'#fff'} size={25} label="Go Back" onClick={ _ => history.goBack() }/>
                 <Hamburger toggled={ isOpen } color={'#fff'} toggle={ setOpen } size={20} label="Show Menu" hideOutline={true} rounded />
             </div>
 
-            { isOpen && <div className="head-menu">
-                <div className="down flex center vertical">
-                    <button onClick={ goToMenu } className="link flex between">
-                            <FaHome size={40}/>
-                            <span>Home</span>
-                    </button>
-                    <button className="link flex between">
-                            <GiDart size={40}/>
-                            <span>Cricket</span>
-                    </button>
-                    <button className="link flex between">
-                            <FaTrashAlt size={40}/>
-                            <span>Storage</span>
-                    </button>
-                    <button className="link flex between">
-                            <FaTrashAlt size={40}/>
-                            <span>Scores</span>
-                    </button>
-                </div>
-            </div> }
+            <HeadMenu isOpen={ isOpen } history={history} goToMenu={goToMenu}/>
 
         </div>
     )
