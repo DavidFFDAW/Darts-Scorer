@@ -24,7 +24,7 @@ function App() {
         <Route path='/darts/game/cricket/:players' exact>
           <Header/>
           <div style={{ marginTop: '60px' }}>
-            <CricketPanel/>
+            <CricketPanel maxRounds={ 20 }/>
           </div>
         </Route>
         <Route path='/darts/game/301/:players' exact>
