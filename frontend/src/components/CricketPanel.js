@@ -45,8 +45,10 @@ export default function CricketPanel ({ maxRounds }) {
     }
 
     useEffect(_ => {
-        showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
-    }, [ winner ]);
+        if(winner){
+            return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
+        }
+    }, [ setWinner ]);
 
     const setNextTurn = _ => {
         setShots(0);
