@@ -45,7 +45,7 @@ export default function CricketPanel ({ maxRounds }) {
     }
 
     useEffect(_ => {
-        showPopUpMessage({ stat: true, content: `¡Felicidades ${winner}! ¡Has ganado!` });
+        showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
     }, [ winner ]);
 
     const setNextTurn = _ => {
@@ -56,7 +56,7 @@ export default function CricketPanel ({ maxRounds }) {
     }
 
     const addPoints = (pt, quantity = 1) => {
-        if (winner) return showPopUpMessage({ stat: true, content: `¡Felicidades ${winner}! ¡Has ganado!` });
+        if (winner) return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
 
         if (cricket.someoneHasEverythingClosed(scoreboard)) {
             return setWinner(cricket.checkForWinner(scoreboard));
