@@ -10,7 +10,7 @@ import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
 import CricketBoard from './Boards/CricketBoard';
 
-export default function CricketPanel () {
+export default function CricketPanel ({ maxRounds }) {
     document.title = 'Cricket Game';
 
     const history = useHistory();
@@ -29,6 +29,7 @@ export default function CricketPanel () {
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
     const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
+    const [ winner, setWinner ] = useState(false);
     const [ isPopUp, setPopUp ] = useState({stat: false});
     
     useEffect(_ => {
@@ -37,11 +38,15 @@ export default function CricketPanel () {
 
     useEffect(_ => {
         storage.store(storageKeys.shot, shots);
-    }, [ shots ]);
+    }, [ shots ]);    
 
     const showPopUpMessage = msg => {
         setPopUp({ stat: true, content: msg });
     }
+
+    useEffect(_ => {
+        showPopUpMessage({ stat: true, content: `¡Felicidades ${winner}! ¡Has ganado!` });
+    }, [ winner ]);
 
     const setNextTurn = _ => {
         setShots(0);
@@ -51,6 +56,19 @@ export default function CricketPanel () {
     }
 
     const addPoints = (pt, quantity = 1) => {
+        if (winner) return showPopUpMessage({ stat: true, content: `¡Felicidades ${winner}! ¡Has ganado!` });
+
+        if (cricket.someoneHasEverythingClosed(scoreboard)) {
+            return setWinner(cricket.checkForWinner(scoreboard));
+        }
+
+        if ( round >= maxRounds ) {
+            if (cricket.someoneHasEverythingClosed(scoreboard)) {
+                return setWinner(cricket.checkForWinner(scoreboard));
+            }
+            return setWinner(cricket.winnerByRoundsAndScores(scoreboard));
+        }
+
         if (quantity > 1) {
             [...Array(quantity).keys()].forEach(_ => {
                 setScoreboard(cricket.addPointToScoreOf(scoreboard, pt, currentUser)); 
@@ -83,7 +101,7 @@ export default function CricketPanel () {
             <GameInfo 
                 user={ currentUser } round={ round } 
                 shots={ shots } players={ players } 
-                maxShots={ maxShots } maxRounds={ 20 } 
+                maxShots={ maxShots } maxRounds={ maxRounds } 
             />
             
             <Scorer scoreboard={ scoreboard } average={ true } />
