@@ -1,35 +1,53 @@
-import { FaHome, FaTrashAlt } from 'react-icons/fa';
-import { GiDart } from 'react-icons/gi';
+import { useState } from 'react';
+import { FaHome } from 'react-icons/fa';
+import { MdDarkMode, MdLightMode } from 'react-icons/md'
+import ls from 'services/local.storage.service';
 
-export default function HeadMenu ({ isOpen, goToMenu }) {
+export default function HeadMenu ({ isOpen, goToMenu, history }) {
+    
+    const iconsSize = 20;
+    const [ isLightMode, setLightMode ] = useState(false);
+
+    const saveThemePreference = _ => {
+        const savedPreference = ls.get('theme');
+        const newPreference = savedPreference === 'light' ? 'dark' : 'light';
+        ls.store('theme', newPreference);
+    }
+
+    const handleColorTheme = _ => {
+        setLightMode(!isLightMode);
+        document.body.classList.toggle('light');
+        saveThemePreference();
+    }
+
+    const getColorThemeButton = _ => {
+        if (!isLightMode){
+            return (
+                <button className="link flex between" onClick={ _ => handleColorTheme() }>
+                    <MdDarkMode size={iconsSize}/>
+                    <span>Oscuro</span>
+                </button>
+            );
+        }
+        return (
+            <button className="link flex between" onClick={ _ => handleColorTheme() }>
+                <MdLightMode size={iconsSize}/>
+                <span>Claro</span>
+            </button>
+        );
+    }
+    
     return (
         <>
             { isOpen && <div className="head-menu">
-                <div className="down">
-                    <div className="flex center head-link">
-                        <button onClick={ goToMenu } className="link flex between">
-                                <FaHome size={40}/>
-                                <span>Home</span>
-                        </button>
-                    </div>
-                    <div className="flex center head-link">
-                        <button className="link flex between">
-                                <GiDart size={40}/>
-                                <span>Cricket</span>
-                        </button>
-                    </div>
-                    <div className="flex center head-link">
-                        <button className="link flex between">
-                                <FaTrashAlt size={40}/>
-                                <span>Storage</span>
-                        </button>
-                    </div>
-                    <div className="flex center head-link">
-                        <button className="link flex between">
-                                <FaTrashAlt size={40}/>
-                                <span>Scores</span>
-                        </button>
-                    </div>
+                <div className="head-link">
+                    <button onClick={ goToMenu } className="link flex between">
+                            <FaHome size={iconsSize}/>
+                            <span>Home</span>
+                    </button>
+                </div>
+                <div className="head-link">
+                    { getColorThemeButton() }
                 </div>
             </div> }
         </>

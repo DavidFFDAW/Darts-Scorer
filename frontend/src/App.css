@@ -4,6 +4,9 @@
     --green: #a4f08d;
     --red: #e96767;
     --blue: #8395be;
+    --light-p: linear-gradient(180deg,#736fad,#512d92);
+    --light-purple: #736fad;
+    --dark-purple: #512d92;
 }
 
 .container {
@@ -39,6 +42,9 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg);
 }
+.app-bg.light {
+    background: #eeeeee;
+}
 .box {
     margin-bottom: 60px;
     box-sizing: border-box;
@@ -48,6 +54,9 @@
     background: var(--boxes);
     width: 100%;
     min-height: 150px;
+}
+.app-bg.light .box {
+    background: var(--light-p);
 }
 .btn {
     cursor: pointer;
@@ -65,6 +74,11 @@
     background-color: #8baa82;
     font-weight: 800;
     letter-spacing: 2px;
+}
+.app-bg.light .btn.green {
+    background: var(--light-p);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 .btn.red {
     background-color: #bd5454;
@@ -163,27 +177,43 @@
     padding: 0 10px;
     width: 100%;
 }
+.app-bg.light .header { background: var(--light-p); }
 .head-menu {
     position: fixed;
-    left: 0;
-    bottom: 0;
+    right: 0;
     top: 50px;
-    width: 100%;
+    width: 35%;
     background: #eee;
-    animation: menu 1s ease forwards;
+    animation: menu 1s ease normal;
+
 }
-.head-link:active {
-    text-align: center;
-    background-color: #c2c2c2;
+.app-bg.light .head-menu {
+    background: #fff;
+}
+.app-bg.light .head-link button {
+    color: var(--light-purple);
+}
+.head-link { display: block; cursor: pointer; }
+
+.app-bg.light .head-link:hover {
+    background-color: var(--light-purple);
+}
+.app-bg.light .head-link:hover button,
+.app-bg.light .head-link:hover button span {
+    color: #fff;
+}
+.app-bg.light .head-link:active {    
+    background-color: var(--dark-purple);
 }
 .head-menu button.link {
+    width: 100%;
     padding: 15px;
     border: none;
     background: transparent;
     font-size: 30px;    
 }
 .head-menu button.link span {
-    margin-left: 50px;
+    font-size: 20px;
     color: #757575;
 }
 .score label.title {
@@ -217,7 +247,7 @@ table td { background: #626262; font-size: 20px; }
 
 @keyframes menu {
     0% {
-        transform: translateY(600px);
+        transform: translateY(-600px);
         opacity: 0;
     }
     100% {

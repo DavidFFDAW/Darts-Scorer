@@ -8,6 +8,13 @@
     border: none;
     border-radius: 20px;
 }
+.app-bg.light .scorer { background: var(--light-p); }
+
 .dbug {
     color: #fff;
+}
+.app-bg.light .dbug{ 
+    color: #001;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
