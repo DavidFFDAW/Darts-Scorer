@@ -123,12 +123,12 @@ const parser = {
             const maxScored = getMaxFromScore(playersClosed.map(element => element.score));
             return playersClosed.find(element => element.score === maxScored).name;
        }
-       return winnerByRoundsAndScores(scoreboard);
+       return false;
   }
   
   
   const CricketGameService = {
-        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName, checkForWinner
+        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName, checkForWinner, someoneHasEverythingClosed, winnerByRoundsAndScores
   }
   
   export default CricketGameService;
