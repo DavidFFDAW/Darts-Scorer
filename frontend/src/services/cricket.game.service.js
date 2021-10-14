@@ -91,10 +91,44 @@ const parser = {
   
   
   const getScoreByPlayerName = (scorer, player) => scorer.find(({ name }) => name === player).score;
+
+  const someoneHasEverythingClosed = scoreboard => scoreboard.some(it => Object.values(it.points).every(it => it >= 3));
+
+  const getPlayersWithAllClosed = scorer => scorer.filter(il => Object.values(il.points).every(il => il >= 3));
+
+  const getJustScores = scorer => scorer.map(i => i.score);
+
+  const getMaxFromScore = scores => Math.max(...scores);
+
+  const getPlayersWithMaxScore = (scorer, max) => scorer.filter(ilm => ilm.score === max);
+
+
+
+  const winnerByRoundsAndScores = scoreboard => {
+       const maxScore = getMaxFromScore(getJustScores(scoreboard));
+       const playersWithMaxScore = getPlayersWithMaxScore(scoreboard, maxScore);
+
+       if (playersWithMaxScore.length === 1) {
+              return playersWithMaxScore[0].name;
+       }
+
+       return false;
+   }
+
+
+
+  const checkForWinner = (scoreboard) => {
+       if (someoneHasEverythingClosed(scoreboard)) {
+            const playersClosed = getPlayersWithAllClosed(scoreboard);
+            const maxScored = getMaxFromScore(playersClosed.map(element => element.score));
+            return playersClosed.find(element => element.score === maxScored).name;
+       }
+       return winnerByRoundsAndScores(scoreboard);
+  }
   
   
   const CricketGameService = {
-        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName
+        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName, checkForWinner
   }
   
   export default CricketGameService;
