@@ -48,7 +48,7 @@ export default function CricketPanel ({ maxRounds }) {
         if(winner){
             return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
         }
-    }, [ setWinner ]);
+    }, [ winner ]);
 
     const setNextTurn = _ => {
         setShots(0);
