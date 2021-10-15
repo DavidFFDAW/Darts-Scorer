@@ -10,10 +10,9 @@ import ls from 'services/local.storage.service';
 
 function App() {
 
+  const defaultTheme = 'light';
   const savedThemeColor = ls.get('theme');
-  if (savedThemeColor === 'light') {
-      document.body.classList.add('light');
-  }
+  document.body.classList.add( savedThemeColor || defaultTheme );
   
   return (
     <Router>
