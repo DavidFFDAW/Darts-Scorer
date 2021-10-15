@@ -11,8 +11,9 @@ import ls from 'services/local.storage.service';
 function App() {
 
   const savedThemeColor = ls.get('theme');
-  const colorTheme = savedThemeColor || '';
-  document.body.classList.add(colorTheme);
+  if (savedThemeColor === 'light') {
+      document.body.classList.add('light');
+  }
   
   return (
     <Router>
