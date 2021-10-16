@@ -17,7 +17,7 @@ export default function Game01Panel ({ game, maxPoints, maxShots = 3 }) {
     const history = useHistory();
     if (!players) history.push('/');
     
-    const pointboard = [...Array(21).keys()];
+    const pointboard = [...Array(20).keys()].map(it => it+1);
     storage.store(storageKeys.maxshots,maxShots);
     
 
@@ -91,15 +91,27 @@ export default function Game01Panel ({ game, maxPoints, maxShots = 3 }) {
             <Scorer scoreboard={ scoreboard } lastShot={ true } />
 
             <div className="down">
-                <div className="flex between wrap">
+                <div className="grid points">
+                    <div className="flex center" style={{ padding: '5px' }}>
+                        <button className="pt-btn" onClick={ _ => substractPoint(0,`0`) }>0</button>
+                    </div>
                     { pointboard.map((it,ind) => {
-                        return (<div key={ ind } className="flex center vertical">
-                            <button className="pt-btn double" style={{ display:'block' }} onClick={ _ => substractPoint(it*2,`D${ it }`) }>D{ it }</button>
-                            <button className="pt-btn" style={{ display:'block' }} onClick={ _ => substractPoint(it) }>{ it }</button>
-                            <button className="pt-btn triple" style={{ display:'block' }} onClick={ _ => substractPoint(it*3,`T${ it }`) }>T{ it }</button>
+                        return (<div key={ ind } className="">
+                            <div className="flex center" style={{ padding: '5px' }}>
+                                <button className="pt-btn double" onClick={ _ => substractPoint(it*2,`D${ it }`) }>D{ it }</button>
+                                <button className="pt-btn" onClick={ _ => substractPoint(it) }>{ it }</button>
+                                <button className="pt-btn triple" onClick={ _ => substractPoint(it*3,`T${ it }`) }>T{ it }</button>
+                            </div>
                         </div>
                         )
                     }) }
+                    <div className="flex center" style={{ padding: '5px' }}>
+                        <button className="pt-btn" onClick={ _ => substractPoint(25,`25`) }>25</button>
+                        <button className="pt-btn double" onClick={ _ => substractPoint(25*2,`D25`) }>D25</button>
+                    </div>
+                    <div className="flex center" style={{ padding: '5px' }}>
+                        <button className="pt-btn triple" onClick={ _ => substractPoint(0,`OUT`) }>OUT</button>
+                    </div>
                 </div>
             </div>
 

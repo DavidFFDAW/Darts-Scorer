@@ -3,7 +3,7 @@ import { FaHome } from 'react-icons/fa';
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
 import ls from 'services/local.storage.service';
 
-export default function HeadMenu ({ isOpen, goToMenu, history }) {
+export default function HeadMenu ({ isOpen, goToMenu, closeMenu, history }) {
     
     const iconsSize = 20;
     const [ isLightMode, setLightMode ] = useState(false);
@@ -18,6 +18,7 @@ export default function HeadMenu ({ isOpen, goToMenu, history }) {
         setLightMode(!isLightMode);
         document.body.classList.toggle('light');
         saveThemePreference();
+        closeMenu();
     }
 
     const getColorThemeButton = _ => {
@@ -25,14 +26,14 @@ export default function HeadMenu ({ isOpen, goToMenu, history }) {
             return (
                 <button className="link flex between" onClick={ _ => handleColorTheme() }>
                     <MdDarkMode size={iconsSize}/>
-                    <span>Oscuro</span>
+                    <span>Claro</span>
                 </button>
             );
         }
         return (
             <button className="link flex between" onClick={ _ => handleColorTheme() }>
                 <MdLightMode size={iconsSize}/>
-                <span>Claro</span>
+                <span>Oscuro</span>
             </button>
         );
     }

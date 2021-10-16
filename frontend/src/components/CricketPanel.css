@@ -3,7 +3,7 @@
     margin: 10px auto;
     width: 35%;
     padding: 10px;
-    background-color: var(--blue);
+    background: var(--dark-p);
     color: #fff;
     border: none;
     border-radius: 20px;
@@ -12,6 +12,8 @@
 
 .dbug {
     color: #fff;
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 .app-bg.light .dbug{ 
     color: #001;

@@ -20,17 +20,15 @@ export default function Header() {
         });
         history.push('/darts/options');
     }
-    
-    // const deleteJustNeeded = _ => {
-    //     ls.removeByKey(sk.scoreboard);
-    //     ls.removeByKey('round');
-    //     ls.removeByKey('shot');
-    // }
+
+    const closeMenuOnClick = _ => {
+        setOpen(false);
+    }
 
     const goToMenu = _ => {
         pl.setPlayersCurrentCounter(0);
         deleteCache();
-        history.push('/');
+        closeMenuOnClick();
     }
 
     return (
@@ -40,7 +38,10 @@ export default function Header() {
                 <Hamburger toggled={ isOpen } color={'#fff'} toggle={ setOpen } size={20} label="Show Menu" hideOutline={true} rounded />
             </div>
 
-            <HeadMenu isOpen={ isOpen } history={history} goToMenu={goToMenu}/>
+            <HeadMenu 
+                isOpen={ isOpen } history={history} 
+                goToMenu={goToMenu} closeMenu={closeMenuOnClick}
+            />
 
         </div>
     )
