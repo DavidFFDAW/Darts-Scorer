@@ -91,25 +91,22 @@ export default function Game01Panel ({ game, maxPoints, maxShots = 3 }) {
             <Scorer scoreboard={ scoreboard } lastShot={ true } />
 
             <div className="down">
-                <div className="grid points">
-                    <div className="flex center" style={{ padding: '5px' }}>
-                        <button className="pt-btn" onClick={ _ => substractPoint(0,`0`) }>0</button>
-                    </div>
+                <div className="flex between wrap">
                     { pointboard.map((it,ind) => {
-                        return (<div key={ ind } className="">
+                        return (<div key={ ind } className="point-btn-group">
                             <div className="flex center" style={{ padding: '5px' }}>
                                 <button className="pt-btn double" onClick={ _ => substractPoint(it*2,`D${ it }`) }>D{ it }</button>
-                                <button className="pt-btn" onClick={ _ => substractPoint(it) }>{ it }</button>
+                                <button className="pt-btn" onClick={ _ => substractPoint(it) }>{ it < 10 ? `0${it}` : it }</button>
                                 <button className="pt-btn triple" onClick={ _ => substractPoint(it*3,`T${ it }`) }>T{ it }</button>
                             </div>
                         </div>
                         )
                     }) }
-                    <div className="flex center" style={{ padding: '5px' }}>
+                    <div className="flex center point-btn-group" style={{ padding: '5px' }}>
                         <button className="pt-btn" onClick={ _ => substractPoint(25,`25`) }>25</button>
                         <button className="pt-btn double" onClick={ _ => substractPoint(25*2,`D25`) }>D25</button>
                     </div>
-                    <div className="flex center" style={{ padding: '5px' }}>
+                    <div className="flex center point-btn-group" style={{ padding: '5px' }}>
                         <button className="pt-btn triple" onClick={ _ => substractPoint(0,`OUT`) }>OUT</button>
                     </div>
                 </div>

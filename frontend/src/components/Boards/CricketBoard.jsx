@@ -1,6 +1,6 @@
 export default function CricketBoard ({ players, scoreboard, addPoints, cricketService }) {
     return (
-        <div className="down">
+        <div className="down cricket-board">
             <table>
                 <thead>
                     <tr>
@@ -25,7 +25,7 @@ export default function CricketBoard ({ players, scoreboard, addPoints, cricketS
                 }
                 <tr>
                     <td colSpan={ players.length + 1 }>
-                        <button onClick={ _ => addPoints(0) } className="pt-btn">0</button>
+                        <button onClick={ _ => addPoints(0) } className="pt-btn">OUT</button>
                     </td>
                 </tr>
                 </tbody>

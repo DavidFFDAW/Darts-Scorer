@@ -22,18 +22,18 @@ export default function HeadMenu ({ isOpen, goToMenu, closeMenu, history }) {
     }
 
     const getColorThemeButton = _ => {
-        if (!isLightMode){
+        if (isLightMode){
             return (
                 <button className="link flex between" onClick={ _ => handleColorTheme() }>
                     <MdDarkMode size={iconsSize}/>
-                    <span>Claro</span>
+                    <span>Oscuro</span>
                 </button>
             );
         }
         return (
             <button className="link flex between" onClick={ _ => handleColorTheme() }>
                 <MdLightMode size={iconsSize}/>
-                <span>Oscuro</span>
+                <span>Claro</span>
             </button>
         );
     }
