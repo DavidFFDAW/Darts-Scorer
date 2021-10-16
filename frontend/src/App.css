@@ -104,8 +104,15 @@
     z-index: 50;
     animation: popup 1s ease forwards;
 }
+.box.popup .btn.red {
+    font-size: 20px;
+}
 .app-bg.light .box.popup {
     background: #fff;
+    color: #000;
+}
+.app-bg.light .box.popup .btn.red {
+    background: var(--light-p);
 }
 .absolute.action-block{
     position: absolute;
