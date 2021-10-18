@@ -2,11 +2,11 @@
   <a href="https://darts-scorer.vercel.app/" target="blank"><img src="./frontend/src/darts-logo.svg" width="80" alt="Darts Board Logo" /></a>
 </p>
 
-<p align="center" ><b>Dart Scorer App</b>, la aplicación de dardos.</p>
+<p align="center" ><a href="https://darts-scorer.vercel.app/" target="blank"><strong>Dart Scorer App</strong></a>, la aplicación de dardos.</p>
 
 <p align="center">
-    <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-    <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+    <a target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+    <a target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 </p>
 
 <br/>
