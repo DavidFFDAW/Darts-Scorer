@@ -21,6 +21,7 @@ App that allows you to mantain a record of a game of darts in some modalities (3
 
 ```javascript
  $ git clone 'https://github.com/DavidFFDAW/Darts-Scorer.git'
+ $ cd Darts-Scorer
  $ rm -rf .git
  $ cd frontend
  $ npm install
