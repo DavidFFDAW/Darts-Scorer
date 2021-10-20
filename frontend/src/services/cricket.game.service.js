@@ -80,13 +80,35 @@ const parser = {
   const getPoints = scorer => scorer.map(i => i.points);
   
   
-  const getScorePoints = scoreboard => {
+  const getScorePoints = (scoreboard, key = true) => {
         const keys = Object.keys(getInitialObject());
         const points = getPoints(scoreboard);
   
-        return keys.map(key => {
-              return [key, points.map(pt => parseOutput(pt[key])) ];
-        });
+        if (key) return keys.map(key => ([key, points.map(pt => parseOutput(pt[key]))]));
+        return keys.map(key => points.map( pt => parseOutput(pt[key]) ));
+  }
+
+  const splitArrayHalf = scorer => ({
+      first: scorer.slice(0, scorer.length / 2),
+      second: scorer.slice(scorer.length / 2, scorer.length)
+  });
+
+  const getBoardWithScoresInMiddle = scorer => {
+      const keys = Object.keys(getInitialObject());
+      const splittedPeople = splitArrayHalf(scorer);
+      const firstScore = getScorePoints(splittedPeople.first,false);
+      const secondScore = getScorePoints(splittedPeople.second, false);
+      
+      return keys.map((it, ind) => {
+            return { st: firstScore[ind], pt: it, nd: secondScore[ind] };
+      });
+  }
+
+  const getNames = scorers => scorers.map(it => it.name);
+
+  const getNamesSplitted = scorer => {      
+      const { first, second } = splitArrayHalf(scorer);
+      return [...getNames(first), ' ', ...getNames(second)];
   }
   
   
@@ -128,7 +150,9 @@ const parser = {
   
   
   const CricketGameService = {
-        getScorePoints, build, addPointToScoreOf, getScoreByPlayerName, checkForWinner, someoneHasEverythingClosed, winnerByRoundsAndScores
+        getScorePoints, build, addPointToScoreOf, 
+        getScoreByPlayerName, checkForWinner, someoneHasEverythingClosed,
+        winnerByRoundsAndScores, getBoardWithScoresInMiddle, getNamesSplitted
   }
   
   export default CricketGameService;

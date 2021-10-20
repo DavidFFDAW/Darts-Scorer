@@ -8,7 +8,8 @@ import PlayersService from 'services/player.service';
 import PopUp from './PopUp/PopUp';
 import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
-import CricketBoard from './Boards/CricketBoard';
+// import CricketBoard from './Boards/CricketBoard';
+import NewCricketBoard from './Boards/NewCricketBoard';
 
 export default function CricketPanel ({ maxRounds }) {
     document.title = 'Cricket Game';
@@ -108,8 +109,7 @@ export default function CricketPanel ({ maxRounds }) {
             
             <Scorer scoreboard={ scoreboard } average={ true } />
 
-            <CricketBoard 
-                players={ players } 
+            <NewCricketBoard 
                 scoreboard={ scoreboard } 
                 cricketService={ cricket } 
                 addPoints={ addPoints }

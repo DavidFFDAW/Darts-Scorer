@@ -96,9 +96,10 @@
     right: 0;
 }
 .box.popup {
-    width: 85%;
+    width: 90%;
     position: fixed;
-    top: 25%;
+    left: 5%;
+    top: 50%;
     background: var(--light-p);
     color: #fff;
     z-index: 50;
@@ -119,7 +120,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc( 100% + 50vh );
+    height: calc( 100% + 250vh );
     bottom: 0;
     background: #000;
     opacity: .5;
