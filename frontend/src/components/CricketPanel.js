@@ -8,7 +8,7 @@ import PlayersService from 'services/player.service';
 import PopUp from './PopUp/PopUp';
 import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
-// import CricketBoard from './Boards/CricketBoard';
+import CricketBoard from './Boards/CricketBoard';
 import NewCricketBoard from './Boards/NewCricketBoard';
 
 export default function CricketPanel ({ maxRounds }) {
@@ -35,10 +35,12 @@ export default function CricketPanel ({ maxRounds }) {
     
     useEffect(_ => {
         storage.store(storageKeys.round, round);
+        console.log('round: ', round);
     }, [ round ]);
 
     useEffect(_ => {
         storage.store(storageKeys.shot, shots);
+        console.log('shots: ', shots);
     }, [ shots ]);    
 
     const showPopUpMessage = msg => {
@@ -46,6 +48,7 @@ export default function CricketPanel ({ maxRounds }) {
     }
 
     useEffect(_ => {
+        console.log('winner?: ', winner);        
         if(winner){
             return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
         }
@@ -53,8 +56,11 @@ export default function CricketPanel ({ maxRounds }) {
 
     const setNextTurn = _ => {
         setShots(0);
+        console.log('new_shots: ', shots);        
+        console.log('turn: ', currentUser);        
         const newTurn = PlayersService.next();
         setCurrentUser(newTurn);
+        console.log('newturn: ', currentUser);        
         showPopUpMessage(`Turno de ${ newTurn }`);
     }
 
@@ -109,7 +115,8 @@ export default function CricketPanel ({ maxRounds }) {
             
             <Scorer scoreboard={ scoreboard } average={ true } />
 
-            <NewCricketBoard 
+            <CricketBoard 
+                players={ players }
                 scoreboard={ scoreboard } 
                 cricketService={ cricket } 
                 addPoints={ addPoints }
