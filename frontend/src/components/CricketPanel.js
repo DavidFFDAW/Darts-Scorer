@@ -27,10 +27,12 @@ export default function CricketPanel ({ maxRounds }) {
 
 
     const [ scoreboard, setScoreboard ] = useState(scorer);
+    // ↓ All these could be general Context State ↓
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
     const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
     const [ winner, setWinner ] = useState(false);
+    // ↑ All these could be general Context State ↑
     const [ isPopUp, setPopUp ] = useState({stat: false});
     
     useEffect(_ => {
@@ -115,7 +117,7 @@ export default function CricketPanel ({ maxRounds }) {
             
             <Scorer scoreboard={ scoreboard } average={ true } />
 
-            <CricketBoard 
+            <NewCricketBoard 
                 players={ players }
                 scoreboard={ scoreboard } 
                 cricketService={ cricket } 
