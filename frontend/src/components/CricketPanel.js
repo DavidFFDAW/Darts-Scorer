@@ -10,14 +10,17 @@ import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
 import CricketBoard from './Boards/CricketBoard';
 import NewCricketBoard from './Boards/NewCricketBoard';
+import { usePlayers } from 'hooks/usePlayers';
 
 export default function CricketPanel ({ maxRounds }) {
     document.title = 'Cricket Game';
 
     const history = useHistory();
+    const { getPlayers } = usePlayers();
     const maxShots = 3;
     storage.store(storageKeys.maxshots,maxShots);
-    const players = storage.get(storageKeys.playernames);
+    const players = getPlayers();
+    console.log(players);
     
     if (!players) history.push('/');
 
@@ -118,7 +121,7 @@ export default function CricketPanel ({ maxRounds }) {
             <Scorer scoreboard={ scoreboard } average={ true } />
 
             <NewCricketBoard 
-                players={ players }
+                players={ players.map(it => it.name) }
                 scoreboard={ scoreboard } 
                 cricketService={ cricket } 
                 addPoints={ addPoints }
