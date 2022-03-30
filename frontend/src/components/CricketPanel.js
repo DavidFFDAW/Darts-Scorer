@@ -26,7 +26,9 @@ export default function CricketPanel ({ maxRounds }) {
 
     PlayersService.setPlayers(players);
     const localScorer = storage.getScoreboardByGame('cricket');
-    const scorer =  localScorer || cricket.build(players);
+    const scorer = localScorer || cricket.build(players);
+    console.log('cricket.build()', cricket.build(players));
+    console.log('scorer: ',scorer);
 
 
     const [ scoreboard, setScoreboard ] = useState(scorer);
