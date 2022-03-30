@@ -8,46 +8,37 @@ import PlayersService from 'services/player.service';
 import PopUp from './PopUp/PopUp';
 import Scorer from './Scorer/Scorer';
 import GameInfo from './GameInfo/GameInfo';
-import CricketBoard from './Boards/CricketBoard';
+// import CricketBoard from './Boards/CricketBoard';
 import NewCricketBoard from './Boards/NewCricketBoard';
-import { usePlayers } from 'hooks/usePlayers';
 
 export default function CricketPanel ({ maxRounds }) {
     document.title = 'Cricket Game';
 
     const history = useHistory();
-    const { getPlayers } = usePlayers();
     const maxShots = 3;
     storage.store(storageKeys.maxshots,maxShots);
-    const players = getPlayers();
-    console.log(players);
+    const players = storage.get(storageKeys.playernames);
     
     if (!players) history.push('/');
 
     PlayersService.setPlayers(players);
     const localScorer = storage.getScoreboardByGame('cricket');
-    const scorer = localScorer || cricket.build(players);
-    console.log('cricket.build()', cricket.build(players));
-    console.log('scorer: ',scorer);
+    const scorer =  localScorer || cricket.build(players);
 
 
     const [ scoreboard, setScoreboard ] = useState(scorer);
-    // ↓ All these could be general Context State ↓
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
-    const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer().name);
+    const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
     const [ winner, setWinner ] = useState(false);
-    // ↑ All these could be general Context State ↑
     const [ isPopUp, setPopUp ] = useState({stat: false});
     
     useEffect(_ => {
         storage.store(storageKeys.round, round);
-        console.log('round: ', round);
     }, [ round ]);
 
     useEffect(_ => {
         storage.store(storageKeys.shot, shots);
-        console.log('shots: ', shots);
     }, [ shots ]);    
 
     const showPopUpMessage = msg => {
@@ -55,7 +46,6 @@ export default function CricketPanel ({ maxRounds }) {
     }
 
     useEffect(_ => {
-        console.log('winner?: ', winner);        
         if(winner){
             return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
         }
@@ -63,11 +53,8 @@ export default function CricketPanel ({ maxRounds }) {
 
     const setNextTurn = _ => {
         setShots(0);
-        console.log('new_shots: ', shots);        
-        console.log('turn: ', currentUser);        
         const newTurn = PlayersService.next();
-        setCurrentUser(newTurn.name);
-        console.log('newturn: ', currentUser);        
+        setCurrentUser(newTurn);
         showPopUpMessage(`Turno de ${ newTurn }`);
     }
 
@@ -123,7 +110,6 @@ export default function CricketPanel ({ maxRounds }) {
             <Scorer scoreboard={ scoreboard } average={ true } />
 
             <NewCricketBoard 
-                players={ players.map(it => it.name) }
                 scoreboard={ scoreboard } 
                 cricketService={ cricket } 
                 addPoints={ addPoints }
