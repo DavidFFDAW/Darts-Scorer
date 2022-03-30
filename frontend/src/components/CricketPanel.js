@@ -33,7 +33,7 @@ export default function CricketPanel ({ maxRounds }) {
     // ↓ All these could be general Context State ↓
     const [ round, setRound ] = useState(storage.get(storageKeys.round) || 0);
     const [ shots, setShots ] = useState(storage.get(storageKeys.shot) || 0);
-    const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer());
+    const [ currentUser, setCurrentUser ] = useState(PlayersService.getCurrentPlayer().name);
     const [ winner, setWinner ] = useState(false);
     // ↑ All these could be general Context State ↑
     const [ isPopUp, setPopUp ] = useState({stat: false});
