@@ -1,8 +1,15 @@
-import { useCallback } from 'react';
+import { useContext, useCallback } from 'react';
+import Context from 'context/GamesContext';
 
-export function useDartGame () {
-    // All game service should be here
+export function useDartGame() {
+    
+    const { scoreboard, setGameScorer } = useContext(Context);
+
     const checkCricketGame = useCallback(_ => {
 
     }, [])
+
+    return {
+        scoreboard, setGameScorer, checkCricketGame
+    }
 }

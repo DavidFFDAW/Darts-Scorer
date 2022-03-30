@@ -57,14 +57,14 @@ export default function CricketPanel ({ maxRounds }) {
         if(winner){
             return showPopUpMessage(`¡Felicidades ${winner}! ¡Has ganado!`);
         }
-    }, [ winner ]);
+    }, [ setWinner ]);
 
     const setNextTurn = _ => {
         setShots(0);
         console.log('new_shots: ', shots);        
         console.log('turn: ', currentUser);        
         const newTurn = PlayersService.next();
-        setCurrentUser(newTurn);
+        setCurrentUser(newTurn.name);
         console.log('newturn: ', currentUser);        
         showPopUpMessage(`Turno de ${ newTurn }`);
     }
