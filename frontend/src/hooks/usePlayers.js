@@ -14,7 +14,8 @@ export function usePlayers () {
 
     const setArrayPlayers = useCallback(players => {
         console.log('setArrayPlayers: ', players);
-        const finalPlayers = players.map(player => ({ name: player, id: v4() }));
+        const finalPlayers = [...players];
+        // const finalPlayers = players.map(player => ({ name: player, id: v4() }));
         console.log('finalPlayers: ', finalPlayers);
         setUsers(finalPlayers);
     },[ ])    
