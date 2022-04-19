@@ -15,7 +15,7 @@ export default function Options() {
     const history = useHistory();
 
     useEffect(_ => {
-        fetch('http://vps-f87b433e.vps.ovh.net/impression.php?action=impression&type=SelectionMenu&app=DartsScorer');
+        fetch('http://vps-f87b433e.vps.ovh.net/impression.php?action=impression&type=SelectionMenu&app=DartsScorer', { method: 'POST', mode: 'cors' });
     }, []);
 
     const changeGameType = ev => {
