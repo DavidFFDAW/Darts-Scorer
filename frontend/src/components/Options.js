@@ -1,16 +1,22 @@
 import './Options.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import storage from '../services/local.storage.service';
 import strgKeys from 'constants/storage.keys';
 import logo from '../darts-logo.svg';
+import { usePlayers } from 'hooks/usePlayers';
 
 export default function Options() {
     document.title = 'General Options';
 
     const [numPlayers, setNumPlayers] = useState('');
+    const { setArrayPlayers, getPlayers } = usePlayers();
     const [gameType, setGameType] = useState('');
     const history = useHistory();
+
+    useEffect(_ => {
+        fetch('http://vps-f87b433e.vps.ovh.net/impression.php?action=impression&type=SelectionMenu&app=DartsScorer');
+    }, []);
 
     const changeGameType = ev => {
         const selected = ev.target.options[ev.target.selectedIndex];
@@ -20,6 +26,7 @@ export default function Options() {
     const changeNumberOfPlayers = ev => {
         const selected = ev.target.options[ev.target.selectedIndex];
         setNumPlayers(selected.value);
+        setArrayPlayers();
     }
 
     const storeConfigAndContinue = () => {
