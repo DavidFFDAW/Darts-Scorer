@@ -14,9 +14,9 @@ export default function Options() {
     const [gameType, setGameType] = useState('');
     const history = useHistory();
 
-    useEffect(_ => {
+    /*useEffect(_ => {
         fetch('http://vps-f87b433e.vps.ovh.net/impression.php?action=impression&type=SelectionMenu&app=DartsScorer', { method: 'POST', mode: 'cors' });
-    }, []);
+    }, []);*/
 
     const changeGameType = ev => {
         const selected = ev.target.options[ev.target.selectedIndex];
