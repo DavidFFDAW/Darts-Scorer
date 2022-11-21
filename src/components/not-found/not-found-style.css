@@ -1,0 +1,148 @@
+:root {
+    --white-ghost: #1976d2;
+    --background-ghost: #c8f2ef;
+    --shadow-ghost: #959c9d;
+}
+
+.ghost__container {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+    font-family: monospace;
+}
+.text {
+    color: #000;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.ghost__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--background-ghost);
+}
+.ghost__body {
+    width: 110px;
+    height: 140px;
+    position: relative;
+    border-radius: 50px 50px 0 0;
+    background-color: var(--white-ghost);
+    animation: float 3s linear infinite;
+}
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(50px);
+
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+.ghost__eye {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 55px;
+    left: 35px;
+    border-radius: 50%;
+    background-color: #000;
+}
+.ghost__eye::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 35px;
+    border-radius: 50%;
+    background-color: #000;
+}
+.ghost__eye__ball {
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.ghost__eye__ball::after {
+    content: "";
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    z-index: 1;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.ghost__cheeks {
+    width: 15px;
+    height: 8px;
+    position: absolute;
+    border-radius: 50px;
+    top: 75px;
+    left: 30px;
+    background-color: #ffcaca;
+}
+.ghost__cheeks::after {
+    content: "";
+    width: 15px;
+    height: 8px;
+    position: absolute;
+    border-radius: 50px;
+    left: 43px;
+    background-color: #ffcaca;
+}
+.ghost__bottom {
+    width: 27.5px;
+    height: 20px;
+    position: absolute;
+    border-radius: 0 0 50px 50px;
+    background-color: var(--white-ghost);
+    top: 140px;
+}
+.b2 {
+    left: 27.5px;
+}
+.b3 {
+    left: 55px;
+}
+.b4 {
+    left: 82px;
+}
+/* shadow */
+.shadow {
+    width: 80px;
+    height: 20px;
+    margin-top: 100px;
+    border-radius: 50px;
+    background-color: var(--shadow-ghost);
+    animation: shadow 1.5s ease infinite;
+    transform: scale(1);
+    transform-origin: bottom center;
+    animation-direction: alternate;
+}
+@keyframes shadow {
+    0% {
+        transform: scale(0.8, 1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.2, 1);
+        opacity: 1;
+    }
+}
