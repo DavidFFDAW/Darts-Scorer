@@ -246,3 +246,35 @@ a .mat-icons {
     font-weight: 500;
     transition: all 0.2s ease-in-out;
 }
+.form-item textarea {
+    width: 100%;
+    margin: 15px 0;
+    border: none;
+    outline: none;
+    min-height: 8rem;
+    background: var(--headers);
+    color: var(--yellow-app);
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 200;
+    resize: vertical;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transition: all 0.2s ease-in-out;
+}
+.form-item .form-error{
+    color: red;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+footer.contact a {
+    box-sizing: border-box;
+    padding: 15px 10px;
+    color: var(--white-app);
+    text-decoration: none;
+    text-emphasis: none;
+    display: block;
+}
