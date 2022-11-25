@@ -1,90 +1,116 @@
-import React from "react";
-import {
-    FlexBetween,
-    FlexCenter,
-    FlexEnd,
-    FormItem,
-} from "components/layouts/Layouts";
-import { TitleIcon } from "components/icon/Icon";
-import { DefaultGeneralHeader } from "components/headers/GeneralHeader";
-import useContact from "./hooks/useContact";
+import React from 'react';
+import { FlexBetween, FlexCenter, FlexEnd, FormItem } from 'components/layouts/Layouts';
+import { TitleIcon } from 'components/icon/Icon';
+import { DefaultGeneralHeader } from 'components/headers/GeneralHeader';
+import useContact from './hooks/useContact';
 
 export default function ContactPage() {
-    
-    const { changeBugReportStatus, bugReport, onSubmit, inputs } = useContact();
+    const { changeBugReportStatus, bugReport, onSubmit, inputs, onchanges } = useContact();
+
     const values = Object.values(inputs);
-    const notValid = values.some((input) => input.value.length <= 0) || values.every(input => Boolean(input.error));
-    
+    const notValid = values.some(input => input.value.length <= 0) || values.every(input => Boolean(input.error));
+
     const sty = {
-        position: "fixed",
+        position: 'fixed',
         background: 'rgba(55, 80, 126, 0.2)',
         minHeight: '89vh',
         width: '20%',
         bottom: 0,
         left: 0,
-    }
+    };
 
     return (
         <>
             <DefaultGeneralHeader text={'Contacto'} animation={true} />
 
-            {!bugReport ? <FlexCenter>
-                    <button className="btn spec pointer" onClick={ changeBugReportStatus }> Quiero reportar un bug </button>
+            {!bugReport ? (
+                <FlexCenter>
+                    <button className="btn spec pointer" onClick={changeBugReportStatus}>
+                        {' '}
+                        Quiero reportar un bug{' '}
+                    </button>
                 </FlexCenter>
-            : null}
+            ) : null}
 
-            {bugReport ? <div className="animate__animated animate__fadeIn flex center grow panel-down">
-                <div className="flex between column panel">
-                    <form
-                        method="GET"
-                        onSubmit={onSubmit}
-                        style={{ width: "100%" }}
-                    >
-                        <FormItem>
-                            <FlexBetween style={{ marginBottom: 25 }}>
-                                <TitleIcon icon={"mail"} />
-                                <label style={{ width: "100%", marginLeft: 15 }}>
-                                    Tu email
-                                </label>
-                            </FlexBetween>
+            {bugReport ? (
+                <div className="animate__animated animate__fadeIn flex center grow panel-down">
+                    <div className="flex between column panel">
+                        <form method="GET" onSubmit={onSubmit} style={{ width: '100%' }}>
+                            <FormItem>
+                                <FlexBetween style={{ marginBottom: 25 }}>
+                                    <TitleIcon icon={'mail'} />
+                                    <label
+                                        style={{
+                                            width: '100%',
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        Tu email
+                                    </label>
+                                </FlexBetween>
 
-                            <input type="text" value={inputs.mail.value} onChange={inputs.mail.onchange} />
-                            { Boolean(inputs.mail.error) ? <p className="form-error"> {inputs.mail.error} </p> : null }
-                        </FormItem>
+                                <input type="text" value={inputs.mail.value} onChange={onchanges.email} />
+                                {Boolean(inputs.mail.error) ? <p className="form-error"> {inputs.mail.error} </p> : null}
+                            </FormItem>
 
-                        <FormItem>
-                            <FlexBetween style={{ marginBottom: 25 }}>
-                                <TitleIcon icon={"person"} />
-                                <label style={{ width: "100%", marginLeft: 15 }}>
-                                    Nombre
-                                </label>
-                            </FlexBetween>
-                            
-                            <input type="text" value={inputs.name.value} onChange={inputs.name.onchange} />
-                            { Boolean(inputs.name.error) ? <p className="form-error"> {inputs.name.error} </p> : null }
-                        </FormItem>
+                            <FormItem>
+                                <FlexBetween style={{ marginBottom: 25 }}>
+                                    <TitleIcon icon={'person'} />
+                                    <label
+                                        style={{
+                                            width: '100%',
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        Nombre
+                                    </label>
+                                </FlexBetween>
 
-                        <FormItem>
-                            <FlexBetween style={{ marginBottom: 25 }}>
-                                <TitleIcon icon={"subject"} />
-                                <label style={{ width: "100%", marginLeft: 15 }}>
-                                    Breve descripcion del error
-                                </label>
-                            </FlexBetween>
+                                <input type="text" value={inputs.name.value} onChange={onchanges.name} />
+                                {Boolean(inputs.name.error) ? <p className="form-error"> {inputs.name.error} </p> : null}
+                            </FormItem>
 
-                            <textarea type="text" value={inputs.body.value} onChange={inputs.body.onchange} ></textarea>
-                            { Boolean(inputs.body.error) ? <p className="form-error"> {inputs.body.error} </p> : null }
-                        </FormItem> 
+                            <FormItem>
+                                <FlexBetween style={{ marginBottom: 25 }}>
+                                    <TitleIcon icon={'subject'} />
+                                    <label
+                                        style={{
+                                            width: '100%',
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        Breve descripcion del error
+                                    </label>
 
-                        <FlexEnd>
-                            <button type="submit" className="btn spec pointer" disabled={ notValid }> Enviar </button>
-                        </FlexEnd>
-                    </form>
+                                    <FlexEnd>
+                                        <span>{inputs.body.value.length}/255</span>
+                                    </FlexEnd>
+                                </FlexBetween>
+
+                                <textarea type="text" value={inputs.body.value} onChange={onchanges.message}></textarea>
+                                {Boolean(inputs.body.error) ? <p className="form-error"> {inputs.body.error} </p> : null}
+                            </FormItem>
+
+                            <FlexEnd>
+                                <button type="submit" className="btn spec pointer" disabled={notValid}>
+                                    {' '}
+                                    Enviar{' '}
+                                </button>
+                            </FlexEnd>
+                        </form>
+                    </div>
                 </div>
-            </div> : null }
-                
+            ) : null}
+
             <footer className="contact animate__animated animate__fadeInLeft" style={sty}>
-                <div style={{ width: '80%', alignItems: 'flex-start', padding: 25 }} className="flex between column">
+                <div
+                    style={{
+                        width: '80%',
+                        alignItems: 'flex-start',
+                        padding: 25,
+                    }}
+                    className="flex between column"
+                >
                     <div>
                         <h4>Enlaces</h4>
                         <div>
@@ -113,12 +139,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                         <h4>Follow</h4>
-                        <div>
-                        </div>
+                        <div></div>
                     </div>
                 </div>
             </footer>
         </>
-
     );
 }

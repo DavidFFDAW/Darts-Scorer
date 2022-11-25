@@ -1,69 +1,69 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function useContact() {
-
     const [bugReport, setBugReport] = useState(false);
-    
-    function emailChange (e) {
-        const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value);
-        const errorMessage = isValidEmail ? false : "Debe introducir un correo válido";
-        
-        setInputs(previous => {
-            console.log('previo', previous);
-            const tr = { ...previous.mail, value: e.target.value, errorMessage };
-            console.log('tr', { ...previous.mail, tr });
-            console.log('nuevo', { ...previous, mail: tr });
-            return {...previous, mail: tr};
-        });
-
-        console.log('emailChange:', inputs);
-    };
-    
-    function nameChange (e) {
-        const isValidName = e.target.value.length >= 3;
-        const errorMessage = isValidName ? false : "El nombre debe tener al menos 3 caracteres";
-        
-        setInputs({...inputs, name: {...inputs.name, error: errorMessage, value: e.target.value}});
-        console.log('nameChange:', inputs);
-    };
-    
-    function messageChange (e) {
-        const isValidBody = e.target.value.length >= 10 && e.target.value.length <= 255;
-        const errorMessage = isValidBody ? false : "El mensaje debe tener entre 10 y 255 caracteres";
-        
-        setInputs({...inputs, body: {...inputs.body, error: errorMessage, value: e.target.value}});
-        console.log('messageChange:', inputs);
-    };
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
     const [inputs, setInputs] = useState({
         mail: {
             error: false,
-            value: "",
-            onchange: emailChange,
+            value: '',
         },
         name: {
             error: false,
-            value: "",
-            onchange: nameChange,
+            value: '',
         },
         body: {
             error: false,
-            value: "",
-            onchange: messageChange,
+            value: '',
         },
     });
 
+    const updateStateFor = (key, value, error) => {
+        setInputs(prevInputs => {
+            return {
+                ...prevInputs,
+                [key]: {
+                    value: value,
+                    error: error,
+                },
+            };
+        });
+    };
+
+    const emailChange = e => {
+        const isValidEmail = emailRegex.test(e.target.value);
+
+        const errorMessage = isValidEmail ? false : 'Debe introducir un correo válido';
+
+        updateStateFor('mail', e.target.value, errorMessage);
+    };
+
+    const nameChange = e => {
+        const isValidName = e.target.value.length >= 3;
+        const errorMessage = isValidName ? false : 'El nombre debe tener al menos 3 caracteres';
+
+        updateStateFor('name', e.target.value, errorMessage);
+    };
+
+    const messageChange = e => {
+        const isValidBody = e.target.value.length >= 10 && e.target.value.length <= 255;
+        const errorMessage = isValidBody ? false : 'El mensaje debe tener entre 10 y 255 caracteres';
+
+        updateStateFor('body', e.target.value, errorMessage);
+    };
+
     const changeBugReportStatus = () => {
         setBugReport(previousState => !previousState);
-    }
+    };
 
-    const sendEmail = (email, name, message) => { 
-        // send email
-        const url = 'http://vps-f87b433e.vps.ovh.net/mail/mail_api.php';
+    const sendEmail = (email, name, message) => {
+        const url = 'https://vps-f87b433e.vps.ovh.net/mail/mail.api.php';
         return fetch(url, {
             method: 'POST',
+            mode: 'cors',
             headers: {
-                'Accept': 'application/json',
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -72,27 +72,35 @@ export default function useContact() {
                 name: name,
                 subject: 'Soporte App Dardos',
                 body: message,
-            })
-        }).then((response) => response.json())
-        .then(resp => {
-            console.log(resp)
-            return resp
+            }),
         })
-        .catch(console.log);
-    }
+            .then(response => response.json())
+            .then(resp => {
+                console.log(resp);
+                return resp;
+            })
+            .catch(console.log);
+    };
 
     const hasInputErrors = () => {
         return Object.values(inputs).some(input => Boolean(input.error));
-    }
+    };
 
-    const onSubmit = (event) => {
+    const onSubmit = event => {
         event.preventDefault();
         const hasErrors = hasInputErrors();
-        
+
         if (!hasErrors) {
             changeBugReportStatus();
+            sendEmail(inputs.mail.value, inputs.name.value, inputs.body.value);
         }
-    }
+    };
 
-    return { bugReport, changeBugReportStatus, onSubmit, inputs };
+    const onchanges = {
+        email: emailChange,
+        name: nameChange,
+        message: messageChange,
+    };
+
+    return { bugReport, changeBugReportStatus, onSubmit, inputs, onchanges };
 }
