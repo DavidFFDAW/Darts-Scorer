@@ -1,5 +1,5 @@
-@import "material-symbols";
-@import "./Typography.css";
+@import 'material-symbols';
+@import './Typography.css';
 
 :root {
     color-scheme: light dark;
@@ -33,11 +33,20 @@
 .flex.between {
     justify-content: space-between;
 }
+.flex.around {
+    justify-content: space-around;
+}
+.flex.evenly {
+    justify-content: space-evenly;
+}
+.flex.start {
+    justify-content: flex-start;
+}
 .flex.wrap {
     flex-wrap: wrap;
 }
 .flex.gap {
-    gap: 1rem;
+    gap: 2rem;
 }
 .flex.grow {
     flex-grow: 1;
@@ -55,10 +64,10 @@
 }
 
 .number {
-    font-family: "501";
+    font-family: '501';
 }
 .app.wrapper {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: #fff;
 }
 
@@ -69,8 +78,17 @@ body {
 .fixed-height {
     height: 100vh;
 }
+.title {
+    margin: 10px 0;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--white-app);
+}
 .w100 {
     width: 100%;
+}
+.w90 {
+    width: 90%;
 }
 .panel {
     width: 80%;
@@ -128,6 +146,13 @@ a.btn {
     background: rgba(119, 119, 119, 0.617);
     color: rgb(114, 114, 114);
     border: none;
+    cursor: not-allowed;
+}
+.btn.simple {
+    padding: 5px 10px;
+    background: transparent;
+    color: var(--yellow-app);
+    /* border: 2px solid var(--yellow-app); */
 }
 .overlay-block {
     position: fixed;
@@ -179,10 +204,10 @@ a.btn {
     background: var(--headers);
 }
 .mat-icons.material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 .mat-icons.material-symbols-filled {
-    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 a .mat-icons {
     color: var(--white-app);
@@ -223,6 +248,96 @@ a .mat-icons {
     color: var(--yellow-app);
     border: 2px solid var(--yellow-app);
 }
+
+.single-score {
+    width: 40%;
+    box-sizing: border-box;
+    padding: 20px;
+    min-height: 25vh;
+    border-radius: 12px;
+    background: var(--foreground);
+}
+.single-score.active {
+    border: 2px solid var(--active-border);
+}
+.single-score.inactive {
+    opacity: 0.5;
+}
+.single-score.inactive span {
+    color: darkgray;
+}
+.single-score .number {
+    color: var(--white-app);
+    font-size: 3rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.single-score .num-container {
+    box-sizing: border-box;
+    padding: 25px 0 15px 0;
+    border-bottom: 2px dotted var(--active-border);
+    width: 100%;
+}
+.single-score .combinations span {
+    box-sizing: border-box;
+    padding: 10px 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    color: var(--yellow-app);
+}
+.single-score.inactive .combinations span {
+    color: var(--yellow-dark);
+}
+
+.grid.btn-grid {
+    width: 90%;
+    grid-template-columns: repeat(3, 1fr);
+}
+.grid.btn-grid .btn {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 25px 0;
+    border-radius: 0;
+    font-size: 2rem;
+    font-weight: 500;
+    background-color: var(--foreground);
+    transition: all 0.2s ease-in-out;
+}
+
+.group-button {
+    background-color: var(--foreground);
+    position: absolute;
+    z-index: 1;
+}
+.grid.btn-grid .group-button .btn {
+    width: 80%;
+    background: var(--background);
+    color: var(--white-app);
+    margin: 10px 0;
+}
+.group-button .close {
+    position: absolute;
+    z-index: 2;
+    top: -25px;
+    /* right: 0; */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    background-color: var(--foreground);
+    color: var(--active-border);
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 .form-item {
     margin-bottom: 20px;
 }
@@ -263,7 +378,7 @@ a .mat-icons {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition: all 0.2s ease-in-out;
 }
-.form-item .form-error{
+.form-item .form-error {
     color: red;
     font-size: 1rem;
     font-weight: 400;
