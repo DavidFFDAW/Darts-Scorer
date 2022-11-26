@@ -1,3 +1,4 @@
+import { AppSettings } from 'AppSetting';
 import { useState } from 'react';
 
 export default function useContact() {
@@ -58,7 +59,7 @@ export default function useContact() {
     };
 
     const sendEmail = (email, name, message) => {
-        const url = 'https://vps-f87b433e.vps.ovh.net/mail/mail.api.php';
+        const url = AppSettings.MAIL_API_ENDPOINT;
         return fetch(url, {
             method: 'POST',
             mode: 'cors',
@@ -67,10 +68,10 @@ export default function useContact() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                receiver: 'davidferflo2@gmail.com',
+                receiver: AppSettings.DEVELOPER_MAIL,
                 sender: email,
                 name: name,
-                subject: 'Soporte App Dardos',
+                subject: AppSettings.MAIL_SUBJECT_SEND,
                 body: message,
             }),
         })
