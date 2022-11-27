@@ -12,6 +12,8 @@ export default function Games01() {
     if (darts.finished && darts.winner) {
         return <Winner darts={darts} />;
     }
+    const currentRound = Math.floor(darts.round / darts.players.length);
+    const currentMaxRound = darts.maxRound / darts.players.length / 3;
 
     return (
         <>
@@ -26,7 +28,7 @@ export default function Games01() {
             <div style={{ marginTop: 20 }}>
                 <FlexCenter className="w90">
                     <div>
-                        {Math.floor(darts.round / darts.players.length)} / {darts.maxRound / darts.players.length / 3}
+                        Ronda: {currentRound} / {currentMaxRound}
                     </div>
                 </FlexCenter>
             </div>
