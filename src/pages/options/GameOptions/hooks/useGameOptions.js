@@ -1,36 +1,31 @@
-import { useState } from "react";
+import { AppSettings } from 'AppSetting';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function useGameOptions() {
+    const navigate = useNavigate();
     const [game, setGame] = useState(0);
     const [players, setPlayers] = useState(0);
-    const availableGames = [301, 501, 701, 1001];
-    const availablePlayers = [2, 3, 4, 5, 6];
-
-    const validTypes = {
-        game: "game",
-        players: "players",
-    };
+    const availableGames = AppSettings.AVAILABLE_GAMES;
+    const availablePlayers = AppSettings.AVAILABLE_PLAYERS;
+    const validTypes = AppSettings.AVAILABLE_TYPES;
 
     const typesLookup = {
         game: setGame,
         players: setPlayers,
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = e => {
         e.preventDefault();
-        const { target } = e;
-        const finalAction = target.action
-            .replace(":game", game)
-            .replace(":num", players);
-        target.action = finalAction.replace("?", "").replace("&", "");
-        e.target.submit();
+        const action = `/options/players/${players}/game/${game}`;
+        navigate(action);
     };
 
-    const isValidGame = (game) => {
+    const isValidGame = game => {
         return availableGames.includes(game);
     };
 
-    const isValidPlayers = (players) => {
+    const isValidPlayers = players => {
         return availablePlayers.includes(players);
     };
 

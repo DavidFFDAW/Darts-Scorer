@@ -6,10 +6,12 @@ export default function useHomePage() {
 
     useEffect(() => {
         const storaged = JSON.parse(localStorage.getItem(AppSettings.LOCAL_STORAGE_KEY));
+        const isEmpty = storaged && Object.keys(storaged).length === 0;
 
-        if (storaged && !storaged.finished) {
+        if (storaged && !isEmpty && !storaged.finished) {
             const url = storaged.game === 'cricket' ? '/games/type/cricket/game/board' : `/games/type/301/game/${storaged.game}/board`;
-            setUnfinishedGame({ hasUnfinishedGame: true, url });
+            const finalURL = storaged.url || url;
+            setUnfinishedGame({ hasUnfinishedGame: true, url: finalURL });
         }
     }, []);
 
