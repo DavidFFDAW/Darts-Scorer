@@ -2,7 +2,7 @@ import { AppSettings } from 'AppSetting';
 import { useState } from 'react';
 
 export default function useContact() {
-    const [bugReport, setBugReport] = useState(false);
+    const [bugReport, setBugReport] = useState(true);
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
     const [inputs, setInputs] = useState({
@@ -96,11 +96,18 @@ export default function useContact() {
         }
     };
 
+    const scrollToLinks = () => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth',
+        });
+    };
+
     const onchanges = {
         email: emailChange,
         name: nameChange,
         message: messageChange,
     };
 
-    return { bugReport, changeBugReportStatus, onSubmit, inputs, onchanges };
+    return { bugReport, changeBugReportStatus, onSubmit, inputs, onchanges, scrollToLinks };
 }

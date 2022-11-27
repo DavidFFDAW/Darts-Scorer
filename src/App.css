@@ -356,6 +356,11 @@ a .mat-icons {
     font-size: 1.2rem;
     font-weight: 500;
 }
+.form-item label.contact.label {
+    width: 100%;
+    margin-left: 15px;
+    font-size: 14px;
+}
 .form-item input {
     width: 100%;
     margin: 15px 0;
@@ -388,12 +393,17 @@ a .mat-icons {
     transition: all 0.2s ease-in-out;
 }
 .form-item .form-error {
-    color: red;
-    font-size: 1rem;
+    color: #e25050;
+    font-size: 14px;
     font-weight: 400;
     margin: 0;
 }
-
+footer .footer-inner {
+    width: 100%;
+    padding: 25px;
+    box-sizing: border-box;
+    align-items: flex-start;
+}
 footer.contact a {
     box-sizing: border-box;
     padding: 15px 10px;
