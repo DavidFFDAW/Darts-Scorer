@@ -4,6 +4,7 @@ import { useCallback, useContext } from 'react';
 
 export default function useDarts() {
     const { darts, setDarts } = useContext(DartsContext);
+    // console.log('darts', darts);
 
     const updateDartsGameData = useCallback(
         game => {

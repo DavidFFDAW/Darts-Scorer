@@ -11,9 +11,9 @@ const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
 
 export function AppRouting() {
     return (
-        <Suspense fallback={<Spinner />}>
-            <BrowserRouter>
-                <DartsContextProvider>
+        <DartsContextProvider>
+            <Suspense fallback={<Spinner />}>
+                <BrowserRouter>
                     <RoutesWithNotFound>
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<h1>About</h1>} />
@@ -21,8 +21,8 @@ export function AppRouting() {
                         <Route path="/options/*" element={<OptionsRouting />} />
                         <Route path="/games/*" element={<GamesRouting />} />
                     </RoutesWithNotFound>
-                </DartsContextProvider>
-            </BrowserRouter>
-        </Suspense>
+                </BrowserRouter>
+            </Suspense>
+        </DartsContextProvider>
     );
 }

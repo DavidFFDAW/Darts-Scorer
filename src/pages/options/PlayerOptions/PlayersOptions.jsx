@@ -18,7 +18,7 @@ export default function PlayersOptions() {
                                 <label style={{ width: '100%', marginLeft: 15 }}>Jugador {player.index}</label>
                             </FlexBetween>
 
-                            <input type="text" maxLength={3} onChange={curriedOnChange(player.index)} value={player.name} />
+                            <input type="text" onChange={curriedOnChange(player.index)} value={player.name} />
                         </FormItem>
                     ))}
 

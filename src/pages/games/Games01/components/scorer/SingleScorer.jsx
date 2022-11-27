@@ -1,4 +1,4 @@
-export default function SingleScorer({ score, active }) {
+export default function SingleScorer({ score, active, turn }) {
     const classes = 'flex start column single-score' + (active ? ' active' : ' inactive');
     return (
         <div className={classes}>
@@ -9,7 +9,10 @@ export default function SingleScorer({ score, active }) {
                 <span className="number">{score.score}</span>
             </div>
             <div className="flex center combinations">
-                <span>combinations</span>
+                <span style={{ fontSize: 12 }}>No combinations</span>
+            </div>
+            <div className="flex center">
+                <span style={{ fontSize: 12 }}>{score.turn} / 3</span>
             </div>
         </div>
     );

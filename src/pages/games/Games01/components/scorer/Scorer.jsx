@@ -6,9 +6,9 @@ export default function Scorer({ scorer }) {
     return (
         <>
             <div className="flex around gap wrap down">
-                {scorer.board.map((player, index) => (
-                    <SingleScorer key={index} score={player} active={isCurrent(player)} />
-                ))}
+                {scorer.board.map((player, index) => {
+                    return <SingleScorer key={index} score={player} active={isCurrent(player)} />;
+                })}
             </div>
         </>
     );

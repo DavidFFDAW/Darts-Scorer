@@ -10,7 +10,7 @@ export default function ButtonGrid({ onClick }) {
     const onClickHandler = e => {
         const { dataset } = e.target;
         const buttonValue = dataset.value;
-        onClick(buttonValue);
+        onClick(Number(buttonValue));
     };
 
     return (
@@ -20,29 +20,41 @@ export default function ButtonGrid({ onClick }) {
                     {currentIndex + 1}/{maximumPages}
                 </div>
                 <div className="flex center">
-                    {currentIndex !== 0 ? (
-                        <button className="btn simple" onClick={ev => setCurrentIndex(curr => curr - 1)}>
-                            <Icon icon={'navigate_before'}></Icon>
-                        </button>
-                    ) : null}
-                    {currentIndex < maximumPages - 1 ? (
-                        <button className="btn simple" onClick={ev => setCurrentIndex(curr => curr + 1)}>
-                            <Icon icon={'navigate_next'}></Icon>
-                        </button>
-                    ) : null}
+                    <button
+                        className="btn simple"
+                        onClick={_ =>
+                            setCurrentIndex(curr => {
+                                if (curr - 1 < 0) return maximumPages - 1;
+                                return curr - 1;
+                            })
+                        }
+                    >
+                        <Icon icon={'navigate_before'}></Icon>
+                    </button>
+                    <button
+                        className="btn simple"
+                        onClick={_ =>
+                            setCurrentIndex(curr => {
+                                if (curr + 1 >= maximumPages) return 0;
+                                return curr + 1;
+                            })
+                        }
+                    >
+                        <Icon icon={'navigate_next'}></Icon>
+                    </button>
                 </div>
             </div>
 
             <div className="grid btn-grid">
-                {indexes
-                    .slice(currentIndex * 9, currentIndex * 9 + 9)
-                    .map((item, index) =>
-                        item === 25 ? (
-                            <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} />
-                        ) : (
-                            <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} triple />
-                        ),
-                    )}
+                {indexes.slice(currentIndex * 9, currentIndex * 9 + 9).map((item, index) => {
+                    if (item === 25) {
+                        return <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} />;
+                    }
+                    if (item === '') {
+                        return <div key={index} className="btn btn-empty"></div>;
+                    }
+                    return <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} triple />;
+                })}
             </div>
         </>
     );
