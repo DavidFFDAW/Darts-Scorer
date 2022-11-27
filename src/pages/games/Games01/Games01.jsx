@@ -1,40 +1,39 @@
+import { Icon } from 'components/icon/Icon';
 import Scorer from './components/scorer/Scorer';
 import useGames01Type from './hooks/useGames01Type';
+import { FlexCenter } from 'components/layouts/Layouts';
 import ButtonGrid from './components/buttons/ButtonGrid';
-import { OverlayBlock } from 'components/overlay/OverlayBlock';
-import { Link } from 'react-router-dom';
-import { FlexBetween, FlexCenter } from 'components/layouts/Layouts';
+import { GeneralHeaderWithNoRound } from 'components/headers/GeneralHeader';
+import Winner from './components/Winner/Winner';
 
 export default function Games01() {
-    const { darts, onButtonClick } = useGames01Type();
+    const { darts, onButtonClick, deleteGame } = useGames01Type();
 
     if (darts.finished && darts.winner) {
-        const styles = { zIndex: 100, position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' };
-
-        return (
-            <>
-                <OverlayBlock />
-                <div className="flex center column w100" style={styles}>
-                    <h1>{darts.winner.name} won!</h1>
-                    <Link to={'/'} className="btn">
-                        Volver al menú
-                    </Link>
-                </div>
-            </>
-        );
+        return <Winner darts={darts} />;
     }
 
     return (
         <>
-            <FlexCenter className="w90">
-                <div>
-                    {darts.round - 1} / {darts.maxRound / darts.players.length / 3}
-                </div>
-            </FlexCenter>
+            <GeneralHeaderWithNoRound>
+                <div></div>
+                <span>{darts.game}</span>
+                <span onClick={deleteGame}>
+                    <Icon icon={'close'} css={'red'}></Icon>
+                </span>
+            </GeneralHeaderWithNoRound>
+
+            <div style={{ marginTop: 20 }}>
+                <FlexCenter className="w90">
+                    <div>
+                        {Math.floor(darts.round / darts.players.length)} / {darts.maxRound / darts.players.length / 3}
+                    </div>
+                </FlexCenter>
+            </div>
 
             <Scorer scorer={darts.scorer} />
 
-            <div className="flex center column w100">
+            <div className="flex center column w100 buttons-grid">
                 <ButtonGrid onClick={onButtonClick} />
             </div>
         </>
