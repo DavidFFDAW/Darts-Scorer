@@ -47,7 +47,7 @@ export default function Games01() {
                 <ButtonGrid onClick={onButtonClick} />
                 <div className="grid btn-grid grid-2">
                     <button className="btn empty">0</button>
-                    <button className="btn" data-value={0} onClick={onClickHandler}>
+                    <button className="btn out" data-value={0} onClick={onClickHandler}>
                         Out
                     </button>
                     <button className="btn empty">0</button>

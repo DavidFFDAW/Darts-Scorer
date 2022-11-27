@@ -301,7 +301,12 @@ a .mat-icons {
 }
 .grid.btn-grid.grid-2 {
     min-height: unset;
-    margin-top: 6px;
+    margin-top: 15px;
+}
+.grid.btn-grid.grid-2 .btn.out {
+    background: var(--foreground);
+    border: 2px solid var(--headers);
+    border-radius: 10px;
 }
 
 .grid.btn-grid .btn.empty {
