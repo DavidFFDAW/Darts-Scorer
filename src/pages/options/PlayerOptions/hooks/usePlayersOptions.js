@@ -17,7 +17,7 @@ export default function usePlayersOptions() {
         setPlayers(prevPlayers => {
             return {
                 ...prevPlayers,
-                [playerIndex]: value.trim().toUpperCase(),
+                [playerIndex]: value.trim(),
             };
         });
     };
