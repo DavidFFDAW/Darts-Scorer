@@ -158,7 +158,8 @@ a.btn {
 .overlay-block {
     position: fixed;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0.5;
     height: 100%;
     z-index: 99;
     top: 0;
@@ -340,6 +341,10 @@ a .mat-icons {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+.buttons-grid {
+    box-sizing: border-box;
+    padding-bottom: 60px;
 }
 
 .form-item {
