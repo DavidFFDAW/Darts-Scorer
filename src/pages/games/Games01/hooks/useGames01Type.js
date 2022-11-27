@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { playTurn } from '../service/games.01.service';
 
 export default function useGames01Type() {
-    const { darts, updateDartsGameData } = useDarts();
+    const { darts, updateDartsGameData, deleteGame } = useDarts();
 
     const onButtonClick = useCallback(
         score => {
@@ -16,5 +16,6 @@ export default function useGames01Type() {
     return {
         darts,
         onButtonClick,
+        deleteGame,
     };
 }

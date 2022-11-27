@@ -79,6 +79,13 @@ const setNextPlayer = game => {
     game.scorer.userId = game.currentUser.id;
 };
 
+const scorePoints = (playingUser, game, score) => {
+    if (isViableScore(game, score)) {
+        playingUser.score -= score;
+    }
+    playingUser.turn += 1;
+};
+
 export const playTurn = (game, score) => {
     if (game.round >= game.maxRound) {
         game.isThereWinner = true;
@@ -91,18 +98,22 @@ export const playTurn = (game, score) => {
     const playingUser = game.scorer.board.find(item => item.id === game.currentUser.id);
 
     if (playingUser.turn >= 3) {
-        playingUser.turn = 0;
+        scorePoints(playingUser, game, score);
+        playingUser.turn = 1;
         setNextPlayer(game);
         game.round += 1;
+
         return game;
     }
 
-    if (isViableScore(game, score)) {
-        playingUser.score -= score;
+    if (!isViableScore(game, score)) {
+        setNextPlayer(game);
+        playingUser.turn = 1;
+
+        return game;
     }
-    console.log('userTurn', playingUser.score);
-    console.log('userTurn', score);
-    playingUser.turn += 1;
+
+    scorePoints(playingUser, game, score);
 
     const winner = calculateWinner(game);
     if (winner) {
