@@ -4,7 +4,7 @@ import DoubleOrTripleButtons from './Buttons';
 
 export default function ButtonGrid({ onClick }) {
     const [currentIndex, setCurrentIndex] = React.useState(0);
-    const indexes = [...Array.from({ length: 20 }, (_, i) => i + 1), 25];
+    const indexes = [...Array.from({ length: 20 }, (_, i) => i + 1), 25, '0', '0', '0', '0', '0', '0'];
     const maximumPages = Math.ceil(indexes.length / 9);
 
     const onClickHandler = e => {
@@ -50,8 +50,12 @@ export default function ButtonGrid({ onClick }) {
                     if (item === 25) {
                         return <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} />;
                     }
-                    if (item === '') {
-                        return <div key={index} className="btn btn-empty"></div>;
+                    if (item === '0') {
+                        return (
+                            <button className="btn empty" key={index}>
+                                {item}
+                            </button>
+                        );
                     }
                     return <DoubleOrTripleButtons key={index} item={item} onClick={onClickHandler} triple />;
                 })}

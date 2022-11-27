@@ -12,6 +12,14 @@ export default function Games01() {
     if (darts.finished && darts.winner) {
         return <Winner darts={darts} />;
     }
+
+    const onClickHandler = e => {
+        const { dataset } = e.target;
+        const buttonValue = dataset.value;
+        console.log(buttonValue);
+        onButtonClick(Number(buttonValue));
+    };
+
     const currentRound = Math.floor(darts.round / darts.players.length);
     const currentMaxRound = darts.maxRound / darts.players.length / 3;
 
@@ -37,6 +45,13 @@ export default function Games01() {
 
             <div className="flex center column w100 buttons-grid">
                 <ButtonGrid onClick={onButtonClick} />
+                <div className="grid btn-grid grid-2">
+                    <button className="btn empty">0</button>
+                    <button className="btn" data-value={0} onClick={onClickHandler}>
+                        Out
+                    </button>
+                    <button className="btn empty">0</button>
+                </div>
             </div>
         </>
     );

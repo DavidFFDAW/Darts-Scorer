@@ -299,6 +299,17 @@ a .mat-icons {
     grid-template-columns: repeat(3, 1fr);
     position: relative;
 }
+.grid.btn-grid.grid-2 {
+    min-height: unset;
+    margin-top: 6px;
+}
+
+.grid.btn-grid .btn.empty {
+    background: transparent;
+    color: transparent;
+    cursor: default;
+}
+
 .grid.btn-grid .btn {
     width: 100%;
     margin: 0;
