@@ -11,3 +11,24 @@ export class AppSettings {
         players: 'players',
     };
 }
+
+export const APP_ROUTES = {
+    HOME: '/',
+    ABOUT: '/about',
+    CONTACT: '/contact',
+    SETTINGS: '/settings',
+    OPTIONS: {
+        INDEX: '/options',
+        PARENT: '/options/*',
+        GAME: {
+            NAVIGATION: '/options/game',
+            ROUTE: '/game',
+        },
+        PLAYERS: 'players/:num/game/:game',
+    },
+    GAMES: {
+        PARENT: '/games/*',
+        X01: '/type/X01/game/:game/board',
+        CRICKET: '/type/cricket/game/:game/board',
+    },
+};

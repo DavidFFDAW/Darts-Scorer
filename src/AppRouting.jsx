@@ -1,3 +1,4 @@
+import { APP_ROUTES } from 'AppSetting';
 import { DartsContextProvider } from 'context/DartsContext';
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -15,11 +16,11 @@ export function AppRouting() {
             <Suspense fallback={<Spinner />}>
                 <BrowserRouter>
                     <RoutesWithNotFound>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<h1>About</h1>} />
-                        <Route path="/contact" element={<ContactPage />} />
-                        <Route path="/options/*" element={<OptionsRouting />} />
-                        <Route path="/games/*" element={<GamesRouting />} />
+                        <Route path={APP_ROUTES.HOME} element={<Home />} />
+                        <Route path={APP_ROUTES.ABOUT} element={<h1>About</h1>} />
+                        <Route path={APP_ROUTES.CONTACT} element={<ContactPage />} />
+                        <Route path={APP_ROUTES.OPTIONS.PARENT} element={<OptionsRouting />} />
+                        <Route path={APP_ROUTES.GAMES.PARENT} element={<GamesRouting />} />
                     </RoutesWithNotFound>
                 </BrowserRouter>
             </Suspense>

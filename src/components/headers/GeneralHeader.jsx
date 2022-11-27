@@ -1,3 +1,4 @@
+import { APP_ROUTES } from 'AppSetting';
 import { Link } from 'react-router-dom';
 import { Icon } from '../icon/Icon';
 
@@ -28,11 +29,11 @@ export function DefaultGeneralHeader({ text, animation = false }) {
     return (
         <>
             <div className="general-header flex between">
-                <Link to={'/'}>
+                <Link to={APP_ROUTES.HOME}>
                     <Icon icon={'home'}></Icon>
                 </Link>
                 <span className={animationClass}>{text}</span>
-                <Link to={'/settings'}>
+                <Link to={APP_ROUTES.SETTINGS}>
                     <Icon icon={'settings'}></Icon>
                 </Link>
                 <div className="general-header round-back"></div>{' '}

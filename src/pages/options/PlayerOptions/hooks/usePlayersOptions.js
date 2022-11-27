@@ -1,3 +1,4 @@
+import { APP_ROUTES } from 'AppSetting';
 import useDarts from 'hooks/useDarts';
 import { initialGameObject } from 'pages/games/Games01/service/games.01.service';
 import { useState } from 'react';
@@ -31,10 +32,11 @@ export default function usePlayersOptions() {
         const playersValues = Object.values(players);
         if (!validatePlayers(playersValues)) return;
 
-        const url = `/games/type/301/game/${game}/board`;
-        const initialObject = initialGameObject(playersValues, game, url);
+        const gameRoute = APP_ROUTES.GAMES.X01.replace(':game', game);
+        const gameStep = `/games${gameRoute}`;
+        const initialObject = initialGameObject(playersValues, game, gameStep);
         updateDartsGameData(initialObject);
-        navigate(url);
+        navigate(gameStep);
     };
 
     return {

@@ -1,3 +1,4 @@
+import { APP_ROUTES } from 'AppSetting';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { DecorativeHeader, DecorativeHeaderSpace } from '../../components/headers/DecorativeHeader';
@@ -34,13 +35,13 @@ export default function HomePage() {
             <DecorativeHeaderSpace extraSpace={unfinishedGame.hasUnfinishedGame}>
                 <div className="animate__animated animate__fadeInUp flex center grow">
                     <div className="flex center column panel">
-                        <Link to={'/options'} className="w100 btn center">
+                        <Link to={APP_ROUTES.OPTIONS.INDEX} className="w100 btn center">
                             Jugar
                         </Link>
-                        <Link to={'/about'} className="w100 btn center">
+                        <Link to={APP_ROUTES.ABOUT} className="w100 btn center">
                             Sobre la app
                         </Link>
-                        <Link to={'/contact'} className="w100 btn center">
+                        <Link to={APP_ROUTES.CONTACT} className="w100 btn center">
                             Contacto
                         </Link>
                     </div>

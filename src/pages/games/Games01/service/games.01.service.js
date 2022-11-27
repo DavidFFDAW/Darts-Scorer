@@ -57,7 +57,6 @@ const calculateWinner = game => {
 
     if (game.round >= game.maxRound) {
         const calculatedWinner = getCalculatedWinner(game);
-        console.log('calculatedWinner', calculatedWinner);
 
         return calculatedWinner;
     }
@@ -72,9 +71,7 @@ const isViableScore = (game, score) => {
 
 const setNextPlayer = game => {
     const currentUser = game.players.findIndex(item => item.id === game.currentUser.id);
-    console.log('index', currentUser);
     const user = game.players[currentUser + 1] || game.players[0];
-    console.log('user', user);
     game.currentUser = user;
     game.scorer.userId = game.currentUser.id;
 };

@@ -77,7 +77,6 @@ export default function useContact() {
         })
             .then(response => response.json())
             .then(resp => {
-                console.log(resp);
                 return resp;
             })
             .catch(console.log);

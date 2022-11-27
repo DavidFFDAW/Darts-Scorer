@@ -1,4 +1,4 @@
-import { AppSettings } from 'AppSetting';
+import { AppSettings, APP_ROUTES } from 'AppSetting';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,8 +17,9 @@ export default function useGameOptions() {
 
     const onSubmit = e => {
         e.preventDefault();
-        const action = `/options/players/${players}/game/${game}`;
-        navigate(action);
+        const url = APP_ROUTES.OPTIONS.PLAYERS.replace(':num', players).replace(':game', game);
+        const nextStep = `/options/${url}`;
+        navigate(nextStep);
     };
 
     const isValidGame = game => {
