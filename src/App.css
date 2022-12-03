@@ -63,6 +63,9 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+.pointer {
+    cursor: pointer;
+}
 .number {
     font-family: '501';
 }
