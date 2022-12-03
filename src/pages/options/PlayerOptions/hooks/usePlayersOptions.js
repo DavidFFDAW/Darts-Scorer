@@ -18,7 +18,7 @@ export default function usePlayersOptions() {
         setPlayers(prevPlayers => {
             return {
                 ...prevPlayers,
-                [playerIndex]: value.trim(),
+                [playerIndex]: value,
             };
         });
     };
@@ -29,7 +29,7 @@ export default function usePlayersOptions() {
 
     const onSubmit = e => {
         e.preventDefault();
-        const playersValues = Object.values(players);
+        const playersValues = Object.values(players).map(player => player.trim());
         if (!validatePlayers(playersValues)) return;
 
         const gameRoute = APP_ROUTES.GAMES.X01.replace(':game', game);
