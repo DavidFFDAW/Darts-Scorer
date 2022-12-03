@@ -236,6 +236,7 @@ a .mat-icons {
     min-height: 10vh;
 }
 .chip {
+    cursor: pointer;
     display: block;
     text-align: center;
     border: 2px solid var(--white-app);
