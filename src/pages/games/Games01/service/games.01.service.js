@@ -28,6 +28,8 @@ export const initialGameObject = (players, game, url, rounds = 21) => {
                     name: item.name,
                     turn: 1,
                     score: Number(game),
+                    combinations: [],
+                    throws: [],
                 };
             }),
         },
@@ -38,8 +40,10 @@ export const initialGameObject = (players, game, url, rounds = 21) => {
     };
 };
 
-const getDirectWinner = game => {
-    return game.scorer.board.find(item => item.score === 0);
+const getDirectWinner = gameScored => {
+    return gameScored.scorer.board.find(item => {
+        return item.score === 0;
+    });
 };
 
 const getCalculatedWinner = game => {
@@ -76,14 +80,19 @@ const setNextPlayer = game => {
     game.scorer.userId = game.currentUser.id;
 };
 
-const scorePoints = (playingUser, game, score) => {
+const scorePoints = (playingUser, game, score, realValue) => {
     if (isViableScore(game, score)) {
         playingUser.score -= score;
     }
+    if (realValue) {
+        playingUser.throws = [...playingUser.throws, realValue];
+    }
     playingUser.turn += 1;
+
+    return game;
 };
 
-export const playTurn = (game, score) => {
+export const playTurn = (game, score, realValue = false) => {
     if (game.round >= game.maxRound) {
         game.isThereWinner = true;
         game.winner = calculateWinner(game);
@@ -94,15 +103,6 @@ export const playTurn = (game, score) => {
 
     const playingUser = game.scorer.board.find(item => item.id === game.currentUser.id);
 
-    if (playingUser.turn >= 3) {
-        scorePoints(playingUser, game, score);
-        playingUser.turn = 1;
-        setNextPlayer(game);
-        game.round += 1;
-
-        return game;
-    }
-
     if (!isViableScore(game, score)) {
         setNextPlayer(game);
         playingUser.turn = 1;
@@ -110,9 +110,20 @@ export const playTurn = (game, score) => {
         return game;
     }
 
-    scorePoints(playingUser, game, score);
+    scorePoints(playingUser, game, score, realValue);
 
-    const winner = calculateWinner(game);
+    if (playingUser.turn >= 4) {
+        playingUser.turn = 1;
+        setNextPlayer(game);
+        game.round += 1;
+
+        // return game;
+    }
+
+    const winner = getDirectWinner(game);
+    console.log(' TIRO ' + realValue.label + ' FROM ' + playingUser.name);
+    console.log('scored game winner: ', winner);
+
     if (winner) {
         game.isThereWinner = true;
         game.winner = winner;
