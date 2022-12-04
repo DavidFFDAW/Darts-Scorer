@@ -12,7 +12,7 @@ export default function SingleScorer({ score, active, turn }) {
             </div>
             <div className="flex center column combinations">
                 <span style={{ display: 'block' }}>Combinación ganadora: </span>
-                <span class="combination-span" style={{ display: 'block' }}>
+                <span className="combination-span" style={{ display: 'block' }}>
                     [ {combinations} ]
                 </span>
             </div>
