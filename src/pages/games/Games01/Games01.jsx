@@ -31,7 +31,7 @@ export default function Games01() {
             <GeneralHeaderWithNoRound>
                 <div></div>
                 <span>{darts.game}</span>
-                <span onClick={deleteGame}>
+                <span onClick={deleteGame} style={{ cursor: 'pointer' }}>
                     <Icon icon={'close'} css={'red'}></Icon>
                 </span>
             </GeneralHeaderWithNoRound>
