@@ -16,8 +16,11 @@ export default function Games01() {
     const onClickHandler = e => {
         const { dataset } = e.target;
         const buttonValue = dataset.value;
-        console.log(buttonValue);
-        onButtonClick(Number(buttonValue));
+
+        onButtonClick(Number(buttonValue), {
+            label: e.target.textContent,
+            value: Number(buttonValue),
+        });
     };
 
     const currentRound = Math.floor(darts.round / darts.players.length);

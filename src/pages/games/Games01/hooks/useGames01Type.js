@@ -6,8 +6,8 @@ export default function useGames01Type() {
     const { darts, updateDartsGameData, deleteGame } = useDarts();
 
     const onButtonClick = useCallback(
-        score => {
-            const newPlayed = playTurn(darts, score);
+        (score, realValue) => {
+            const newPlayed = playTurn(darts, score, realValue);
             updateDartsGameData({ ...darts, ...newPlayed });
         },
         [darts, updateDartsGameData],

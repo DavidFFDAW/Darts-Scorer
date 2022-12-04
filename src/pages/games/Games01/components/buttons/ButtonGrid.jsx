@@ -10,7 +10,10 @@ export default function ButtonGrid({ onClick }) {
     const onClickHandler = e => {
         const { dataset } = e.target;
         const buttonValue = dataset.value;
-        onClick(Number(buttonValue));
+        onClick(Number(buttonValue), {
+            label: e.target.textContent,
+            value: Number(buttonValue),
+        });
     };
 
     return (
