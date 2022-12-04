@@ -1,3 +1,4 @@
+import CombinationsService from './combinations/combinations.service';
 export const randomKey = '019438ac-0522-4b0e-';
 
 export const getPlayersKeys = names => {
@@ -116,19 +117,20 @@ export const playTurn = (game, score, realValue = false) => {
         playingUser.turn = 1;
         setNextPlayer(game);
         game.round += 1;
-
-        // return game;
     }
 
     const winner = getDirectWinner(game);
-    console.log(' TIRO ' + realValue.label + ' FROM ' + playingUser.name);
-    console.log('scored game winner: ', winner);
 
     if (winner) {
         game.isThereWinner = true;
         game.winner = winner;
         game.finished = true;
+
+        return game;
     }
+
+    const combinations = CombinationsService.getCombinationPossible(playingUser.score);
+    playingUser.combinations = combinations;
 
     return game;
 };
