@@ -6,7 +6,7 @@ export default function SingleScorer({ score, active, turn }) {
                 <span>{score.name}</span>
             </div>
             <div className="flex center num-container">
-                <span className="number">{score.score}</span>
+                <span className="number pointer">{score.score}</span>
             </div>
             <div className="flex center combinations">
                 <span style={{ fontSize: 12 }}>No combinations</span>
