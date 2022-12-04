@@ -286,12 +286,20 @@ a .mat-icons {
     width: 100%;
 }
 .single-score .combinations span {
+    text-align: center;
     box-sizing: border-box;
     padding: 10px 0 0 0;
-    font-size: 1.1rem;
+    font-size: 14px;
     font-weight: 500;
-    margin: 0;
+    margin: 5px 0;
     color: var(--yellow-app);
+}
+.single-score .combinations span.combination-span {
+    font-weight: 500;
+    font-size: 16px;
+}
+.single-score .combinations span:last-child {
+    margin-bottom: 25px;
 }
 .single-score.inactive .combinations span {
     color: var(--yellow-dark);
