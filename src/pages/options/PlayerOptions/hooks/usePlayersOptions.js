@@ -1,8 +1,8 @@
 import { APP_ROUTES } from 'AppSetting';
 import useDarts from 'hooks/useDarts';
-import { initialGameObject } from 'pages/games/Games01/service/games.01.service';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getInitialGameStateByGame } from 'services/game.chooser.service';
 import playerService from '../services/players.service';
 
 export default function usePlayersOptions() {
@@ -32,9 +32,11 @@ export default function usePlayersOptions() {
         const playersValues = Object.values(players).map(player => player.trim());
         if (!validatePlayers(playersValues)) return;
 
-        const gameRoute = APP_ROUTES.GAMES.X01.replace(':game', game);
-        const gameStep = `/games${gameRoute}`;
-        const initialObject = initialGameObject(playersValues, game, gameStep);
+        const gameRoute = game !== 'cricket' ? APP_ROUTES.GAMES.X01.replace(':game', game) : APP_ROUTES.GAMES.CRICKET.replace(':game', game);
+        const gameStep = APP_ROUTES.GAMES.PARENT.replace('/*', gameRoute);
+        const gameChooser = getInitialGameStateByGame(game);
+
+        const initialObject = gameChooser(playersValues, game, gameStep);
         updateDartsGameData(initialObject);
         navigate(gameStep);
     };
