@@ -1,0 +1,46 @@
+.tab.btn.active {
+    background: var(--headers);
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+.tab.btn {
+    margin: 0;
+    background: var(--foreground);
+}
+.tab-content .grid,
+.tab-content .header-buttons-grid {
+    background: var(--headers);
+}
+.tab-content .grid {
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+.tab-content .header-buttons-grid {
+    padding: 0 36px;
+    box-sizing: border-box;
+}
+.cricket-game .tab-content .header-buttons-grid {
+    margin-top: 0;
+}
+.tab-content .grid.btn-grid.grid-2 {
+    margin: 0;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background: var(--headers);
+}
+.table-container {
+    min-width: 90%;
+    background: var(--headers);
+}
+.table-container .table {
+    width: 100%;
+    padding: 20px 10px;
+    box-sizing: border-box;
+}
+.table-container .table tr.normal-row td {
+    padding: 10px 2px;
+    box-sizing: border-box;
+}
+.table-container .table tr.normal-row td.numberb {
+    box-sizing: border-box;
+    font-weight: 700;
+}

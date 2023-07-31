@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import GamesGuard from './Games01/guards/GamesGuard';
 
 const Games01 = lazy(() => import('./Games01/Games01'));
+const Cricket = lazy(() => import('./Cricket/Cricket'));
 
 export default function GamesRouting() {
     const { GAMES } = APP_ROUTES;
@@ -11,7 +12,7 @@ export default function GamesRouting() {
         <Routes>
             <Route element={<GamesGuard />}>
                 <Route path={GAMES.X01} element={<Games01 />} />
-                <Route path={GAMES.CRICKET} element={<h1>Cricket</h1>} />
+                <Route path={GAMES.CRICKET} element={<Cricket />} />
             </Route>
         </Routes>
     );

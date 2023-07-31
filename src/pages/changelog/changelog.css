@@ -1,0 +1,31 @@
+.changelog-version-wrapper,
+.changelog-version-wrapper * {
+    box-sizing: border-box;
+}
+.changelog-version-wrapper {
+    width: 95%;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 15px;
+    background: var(--foreground);
+}
+.changelog-version-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+.changelog-version-header .changelog-version-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+.changelog-version-header .changelog-version-date {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.changelog-version-content .changelog-version-text-text {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.5;
+}

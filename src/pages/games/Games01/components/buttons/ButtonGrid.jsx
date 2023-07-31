@@ -18,7 +18,7 @@ export default function ButtonGrid({ onClick }) {
 
     return (
         <>
-            <div className="flex between w90 down">
+            <div className="header-buttons-grid flex between w90 down">
                 <div style={{ letterSpacing: 4 }}>
                     {currentIndex + 1}/{maximumPages}
                 </div>

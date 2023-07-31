@@ -25,6 +25,9 @@ function UnfinishedGameLink({ url }) {
 
 export default function HomePage() {
     const { unfinishedGame } = useHomePage();
+    console.log({
+        unfinishedGame,
+    });
 
     return (
         <>
@@ -43,6 +46,9 @@ export default function HomePage() {
                         </Link>
                         <Link to={APP_ROUTES.CONTACT} className="w100 btn center">
                             Contacto
+                        </Link>
+                        <Link to={APP_ROUTES.CHANGELOG} className="w100 btn center">
+                            Histórico de versiones
                         </Link>
                     </div>
                 </div>

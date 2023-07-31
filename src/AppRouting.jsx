@@ -9,6 +9,7 @@ const Home = lazy(() => import('./pages/home/HomePage'));
 const GamesRouting = lazy(() => import('./pages/games/GamesRouting'));
 const OptionsRouting = lazy(() => import('./pages/options/OptionsRouting'));
 const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
+const Changelog = lazy(() => import('./pages/changelog/ChangelogPage'));
 
 export function AppRouting() {
     return (
@@ -18,6 +19,7 @@ export function AppRouting() {
                     <RoutesWithNotFound>
                         <Route path={APP_ROUTES.HOME} element={<Home />} />
                         <Route path={APP_ROUTES.ABOUT} element={<h1>About</h1>} />
+                        <Route path={APP_ROUTES.CHANGELOG} element={<Changelog />} />
                         <Route path={APP_ROUTES.CONTACT} element={<ContactPage />} />
                         <Route path={APP_ROUTES.OPTIONS.PARENT} element={<OptionsRouting />} />
                         <Route path={APP_ROUTES.GAMES.PARENT} element={<GamesRouting />} />

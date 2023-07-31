@@ -15,6 +15,7 @@ export class AppSettings {
 export const APP_ROUTES = {
     HOME: '/',
     ABOUT: '/about',
+    CHANGELOG: '/changelog',
     CONTACT: '/contact',
     SETTINGS: '/settings',
     OPTIONS: {

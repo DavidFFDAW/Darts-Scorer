@@ -315,6 +315,11 @@ a .mat-icons {
     min-height: unset;
     margin-top: 15px;
 }
+
+.cricket-game .scorer {
+    padding-bottom: 40px;
+}
+
 .grid.btn-grid.grid-2 .btn.out {
     background: var(--foreground);
     border: 2px solid var(--headers);
