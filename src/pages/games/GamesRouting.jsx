@@ -13,6 +13,7 @@ export default function GamesRouting() {
             <Route element={<GamesGuard />}>
                 <Route path={GAMES.X01} element={<Games01 />} />
                 <Route path={GAMES.CRICKET} element={<Cricket />} />
+                <Route path={GAMES.CRICKET_ALL_NUMBERS} element={<Cricket />} />
             </Route>
         </Routes>
     );

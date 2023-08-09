@@ -3,8 +3,9 @@ export class AppSettings {
     static DEVELOPER_MAIL = 'davidferflo2@gmail.com';
     static MAIL_SUBJECT_SEND = 'Soporte App Dardos';
     static MAIL_API_ENDPOINT = 'https://vps-f87b433e.vps.ovh.net/mail/mail.api.php';
+    static CRICKET_ALL_NUMBERS = 'cricket con todos los números'
 
-    static AVAILABLE_GAMES = [301, 501, 701, 1001, 'cricket'];
+    static AVAILABLE_GAMES = [301, 501, 701, 1001, 'cricket', this.CRICKET_ALL_NUMBERS];
     static AVAILABLE_PLAYERS = [2, 3, 4, 5, 6];
     static AVAILABLE_TYPES = {
         game: 'game',
@@ -31,5 +32,6 @@ export const APP_ROUTES = {
         PARENT: '/games/*',
         X01: '/type/X01/game/:game/board',
         CRICKET: '/type/cricket/game/:game/board',
+        CRICKET_ALL_NUMBERS: '/type/cricket/game/:game/all/numbers/board',
     },
 };

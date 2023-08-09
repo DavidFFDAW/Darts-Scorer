@@ -1,4 +1,4 @@
-import { APP_ROUTES } from 'AppSetting';
+import { APP_ROUTES, AppSettings } from 'AppSetting';
 import useDarts from 'hooks/useDarts';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,12 +27,25 @@ export default function usePlayersOptions() {
         return playersValues.every(player => player.length > 0);
     };
 
+    const getGameRoute = game => { 
+        if (game !== 'cricket' && game !== AppSettings.CRICKET_ALL_NUMBERS) {
+            return APP_ROUTES.GAMES.X01.replace(':game', game);
+        }
+
+        if (game === AppSettings.CRICKET_ALL_NUMBERS) {
+            return APP_ROUTES.GAMES.CRICKET_ALL_NUMBERS.replace(':game', 'cricket')
+        }
+        
+        return APP_ROUTES.GAMES.CRICKET.replace(':game', game)
+    }
+
     const onSubmit = e => {
         e.preventDefault();
         const playersValues = Object.values(players).map(player => player.trim());
         if (!validatePlayers(playersValues)) return;
 
-        const gameRoute = game !== 'cricket' ? APP_ROUTES.GAMES.X01.replace(':game', game) : APP_ROUTES.GAMES.CRICKET.replace(':game', game);
+        const gameRoute = getGameRoute(game);
+        // const gameRoute = game !== 'cricket' ? APP_ROUTES.GAMES.X01.replace(':game', game) : APP_ROUTES.GAMES.CRICKET.replace(':game', game);
         const gameStep = APP_ROUTES.GAMES.PARENT.replace('/*', gameRoute);
         const gameChooser = getInitialGameStateByGame(game);
 
