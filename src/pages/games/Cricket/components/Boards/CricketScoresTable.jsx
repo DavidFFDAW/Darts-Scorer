@@ -1,36 +1,56 @@
+function CricketIcons({ value }) {
+
+    if (!value) return null;
+    if (value <= 0) return null;
+    if (value === 1) return '/';
+    if (value === 2) return 'X';
+    if (value >= 3) return 'XO';
+}
+
+function Points({ point, players }) {
+    const [key, value] = point;
+
+    return (
+        <tr className="normal-row">
+            <td className="number" align="start" style={{ width: 100}}>
+                {key}
+            </td>
+            {players.map((player, inx) => (
+                <td key={inx}>
+                    <CricketIcons value={value[player.id]}/>
+                </td>
+            ))}
+        </tr>
+    );
+}
+
 export default function CricketScoresTable({ darts }) {
-    const validPoints = Object.keys(darts.scorer.board[0].valid_points);
+    const userPoints = Object.entries(darts.scorer.board.reduce((previous, current) => {
+        const points = Object.entries(current.valid_points);
+        points.forEach(([key, _]) => {
+            previous[key] = {
+                ...previous[key.toString()],
+                [current.id]: current.valid_points[key],
+            };
+        });
 
-    const datas = {
-        points: validPoints,
-        scorer: darts.scorer.board,
-    };
-
-    console.log({ darts, validPoints });
+        return previous;
+    }, []));
 
     return (
         <>
             <div className="table-container">
-                <table class="table" align="center" width={'100%'}>
+                <table className="table" align="center" width={'100%'}>
                     <thead>
-                        <th></th>
-                        {darts.players.map((player, indx) => {
-                            return <th key={indx}>{player.name}</th>;
-                        })}
+                        <tr>
+                            <th style={{ width: 100}}></th>
+                            {darts.players.map((player, indx) => {
+                                return <th key={indx}>{player.name}</th>;
+                            })}
+                        </tr>
                     </thead>
                     <tbody>
-                        {validPoints.map((score, indx) => {
-                            return (
-                                <tr className="normal-row" key={indx}>
-                                    <td className="number" align="center">
-                                        {score}
-                                    </td>
-                                    <td align="center">asdaaad</td>
-                                    <td align="center">asdaaad</td>
-                                    <td align="center">asdaaad</td>
-                                </tr>
-                            );
-                        })}
+                        {userPoints.map((point, index) => <Points point={point} players={darts.players} key={index} />)}
                     </tbody>
                 </table>
             </div>
