@@ -1,22 +1,30 @@
 import { GeneralHeaderWithNoRound } from 'components/headers/GeneralHeader';
 import { Icon } from 'components/icon/Icon';
 import { FlexCenter } from 'components/layouts/Layouts';
-import useDarts from 'hooks/useDarts';
 import ButtonGrid from '../Games01/components/buttons/ButtonGrid';
 import Scorer from '../Games01/components/scorer/Scorer';
 import Nullable from 'components/loaders/Nullable';
 import useTabs from './components/Tabs/useTabs';
 import Tab from './components/Tabs/Tab';
 import CricketScoresTable from './components/Boards/CricketScoresTable';
+import useCricket from './hooks/useCricket';
 
 export default function Cricket() {
-    const { darts, deleteGame } = useDarts();
     const { tabs, activeTab, setTab } = useTabs();
+    const { darts, deleteGame, onButtonClick } = useCricket();
 
-    const onButtonClick = () => {};
-    const onClickHandler = () => {};
-    const currentRound = 1;
-    const currentMaxRound = 1;
+    const onClickHandler = e => {
+        const { dataset } = e.target;
+        const buttonValue = dataset.value;
+
+        onButtonClick(Number(buttonValue), {
+            label: e.target.textContent,
+            value: Number(buttonValue),
+        });
+    };
+
+    const currentRound = Math.floor(darts.round / darts.players.length);
+    const currentMaxRound = darts.maxRound / darts.players.length / 3; // 3 turns
 
     return (
         <section className="cricket-game">
