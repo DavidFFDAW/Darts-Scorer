@@ -6,14 +6,14 @@ export function Buttons({ item, onClick, toggle, triple }) {
             <button className="close" onClick={toggle}>
                 &times;
             </button>
-            <button className="btn" data-value={item} onClick={onClick}>
+            <button className="btn" data-value={item} data-simple={item} data-times={1} onClick={onClick}>
                 {item}
             </button>
-            <button className="btn" data-value={item * 2} onClick={onClick}>
+            <button className="btn" data-value={item * 2} data-simple={item} data-times={2} onClick={onClick}>
                 D{item}
             </button>
             {triple ? (
-                <button className="btn" data-value={item * 3} onClick={onClick}>
+                <button className="btn" data-value={item * 3} data-simple={item} data-times={3} onClick={onClick}>
                     T{item}
                 </button>
             ) : null}
@@ -32,7 +32,7 @@ export default function DoubleOrTripleButtons({ item, triple, onClick }) {
 
     return (
         <>
-            <button className="btn" data-value={item} onClick={toggleActive}>
+            <button className="btn" data-value={item} data-simple={item} data-times={1} onClick={toggleActive}>
                 {item}
             </button>
             {active ? <Buttons item={item} toggle={toggleActive} onClick={clickHandler} triple={triple} /> : null}

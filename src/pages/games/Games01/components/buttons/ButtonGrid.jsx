@@ -13,6 +13,7 @@ export default function ButtonGrid({ onClick }) {
         onClick(Number(buttonValue), {
             label: e.target.textContent,
             value: Number(buttonValue),
+            datas: dataset,
         });
     };
 

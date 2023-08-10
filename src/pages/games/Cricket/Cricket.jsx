@@ -8,10 +8,15 @@ import useTabs from './components/Tabs/useTabs';
 import Tab from './components/Tabs/Tab';
 import CricketScoresTable from './components/Boards/CricketScoresTable';
 import useCricket from './hooks/useCricket';
+import Winner from '../Games01/components/Winner/Winner';
 
 export default function Cricket() {
     const { tabs, activeTab, setTab } = useTabs();
     const { darts, deleteGame, onButtonClick } = useCricket();
+
+    if (darts.finished && darts.winner) {
+        return <Winner darts={darts} />;
+    }
 
     const onClickHandler = e => {
         const { dataset } = e.target;
@@ -20,6 +25,7 @@ export default function Cricket() {
         onButtonClick(Number(buttonValue), {
             label: e.target.textContent,
             value: Number(buttonValue),
+            datas: dataset,
         });
     };
 
@@ -49,7 +55,7 @@ export default function Cricket() {
             <div className="w100 flex center">
                 <div className="w90 flex start" style={{ gap: 2 }}>
                     <Tab text={'Puntos'} active={activeTab === tabs.points} click={_ => setTab(tabs.points)} />
-                    <Tab text={'Tabla'} active={activeTab === tabs.board} click={_ => setTab(tabs.board)} />
+                    {/* <Tab text={'Tabla'} active={activeTab === tabs.board} click={_ => setTab(tabs.board)} /> */}
                 </div>
             </div>
             <div className="tab-content">
@@ -58,7 +64,7 @@ export default function Cricket() {
                         <ButtonGrid onClick={onButtonClick} />
                         <div className="grid btn-grid grid-2">
                             <button className="btn empty">0</button>
-                            <button className="btn out" data-value={0} onClick={onClickHandler}>
+                            <button className="btn out" data-value={0} data-simple={0} data-times={1} onClick={onClickHandler}>
                                 Out
                             </button>
                             <button className="btn empty">0</button>
@@ -66,11 +72,11 @@ export default function Cricket() {
                     </div>
                 </Nullable>
 
-                <Nullable condition={activeTab === tabs.board}>
+                {/* <Nullable condition={activeTab === tabs.board}> */}
                     <div className="flex center column w100 buttons-grid animate__animated animate__fadeIn">
                         <CricketScoresTable darts={darts} />
                     </div>
-                </Nullable>
+                {/* </Nullable> */}
             </div>
         </section>
     );

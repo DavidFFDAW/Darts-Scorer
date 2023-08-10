@@ -16,7 +16,7 @@ function Points({ point, players }) {
                 {key}
             </td>
             {players.map((player, inx) => (
-                <td key={inx}>
+                <td key={inx} align="center">
                     <CricketIcons value={value[player.id]}/>
                 </td>
             ))}

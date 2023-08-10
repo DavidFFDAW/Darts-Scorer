@@ -89,9 +89,15 @@ const setNextPlayer = game => {
     game.scorer.userId = game.currentUser.id;
 };
 
-const isEveryValidPointClosedFor = player => {}
-const isEveryValidPointClosedForEveryone = _ => { }
-const isNumberClosedForEveryone = _ => {}
+const isEveryValidPointClosedFor = player => {
+    
+}
+const isEveryValidPointClosedForEveryone = board => {
+    return board.find(item => Object.values(item.valid_points).every(point => point >= 3));
+}
+const isNumberClosedForEveryone = (board, score) => {
+    return board.find(playerBoard => Object.values(playerBoard.valid_points).every(point => point[score] >= 3));
+}
 const isNumberClosedFor = player => { }
 
 const scorePoints = (playingUser, game, score, realValue) => {
@@ -109,7 +115,7 @@ const scorePoints = (playingUser, game, score, realValue) => {
 
 export function playCricketTurn(game, score, realValue = false) {
 
-    return game;
+    // return game;
     if (game.round >= game.maxRound) {
         game.isThereWinner = true;
         game.winner = calculateWinner(game);
